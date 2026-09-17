@@ -119,13 +119,13 @@ export default function HandHeartDrawing({
 
     const targetDist = progress * data.totalLen;
 
-    // Glowing warm gold line style (matching groom and bride preloader)
-    ctx.strokeStyle = "rgba(225, 182, 105, 0.92)";
+    // Crisp silk white line style with subtle luminescence
+    ctx.strokeStyle = "#ffffff";
     ctx.lineWidth = 2.8;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.shadowColor = "rgba(255, 215, 0, 0.4)";
-    ctx.shadowBlur = 4;
+    ctx.shadowColor = "rgba(255, 255, 255, 0.85)";
+    ctx.shadowBlur = 6;
 
     let tipX: number | null = null;
     let tipY: number | null = null;
@@ -176,12 +176,12 @@ export default function HandHeartDrawing({
       }
     }
 
-    // Glowing golden pencil spark
+    // Glowing pencil spark
     if (tipX !== null && tipY !== null && progress < 0.99) {
       const glowGrad = ctx.createRadialGradient(tipX, tipY, 0, tipX, tipY, 18);
-      glowGrad.addColorStop(0, "rgba(255, 245, 190, 0.95)");
-      glowGrad.addColorStop(0.35, "rgba(235, 195, 100, 0.55)");
-      glowGrad.addColorStop(1, "rgba(212, 175, 55, 0)");
+      glowGrad.addColorStop(0, "rgba(255, 255, 255, 0.95)");
+      glowGrad.addColorStop(0.35, "rgba(198, 85, 253, 0.7)");
+      glowGrad.addColorStop(1, "rgba(154, 38, 215, 0)");
 
       ctx.fillStyle = glowGrad;
       ctx.beginPath();
@@ -198,7 +198,7 @@ export default function HandHeartDrawing({
         const tSec = timestamp * 0.005;
         const spark1X = tipX + Math.sin(tSec) * 8;
         const spark1Y = tipY + Math.cos(tSec) * 8;
-        ctx.fillStyle = "rgba(255, 235, 150, 0.75)";
+        ctx.fillStyle = "rgba(243, 216, 255, 0.85)";
         ctx.beginPath();
         ctx.arc(spark1X, spark1Y, 1.4, 0, Math.PI * 2);
         ctx.fill();

@@ -1,4 +1,4 @@
-/* ==========================================================================
+css_content = """/* ==========================================================================
    ROYAL PURPLE ADMIN MANAGEMENT PORTAL — PROFESSIONAL STYLESHEET
    Curated for Thushara & Wadusha's Wedding Web Application
    Aesthetic: Clear, Modern, Professional SaaS in Royal Purple & Crisp White
@@ -1765,3 +1765,9 @@
     border-radius: 14px;
   }
 }
+"""
+
+with open("app/admin/admin.css", "w", encoding="utf-8") as f:
+    f.write(css_content.strip() + "\\n")
+
+print("admin.css redesigned successfully.")

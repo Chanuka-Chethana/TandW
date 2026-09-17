@@ -270,10 +270,10 @@ export default function OrderOfTheDayScene() {
                   x2="0%"
                   y2="100%"
                 >
-                  <stop offset="0%" stopColor="#fff8db" />
-                  <stop offset="35%" stopColor="#ffd700" />
-                  <stop offset="70%" stopColor="#f59e0b" />
-                  <stop offset="100%" stopColor="#ffd700" />
+                  <stop offset="0%" stopColor="#ffffff" />
+                  <stop offset="35%" stopColor="#C655FD" />
+                  <stop offset="70%" stopColor="#9A26D7" />
+                  <stop offset="100%" stopColor="#760EAB" />
                 </linearGradient>
                 <linearGradient
                   id="verticalGoldCore"
@@ -283,8 +283,8 @@ export default function OrderOfTheDayScene() {
                   y2="100%"
                 >
                   <stop offset="0%" stopColor="#ffffff" />
-                  <stop offset="50%" stopColor="#ffd700" />
-                  <stop offset="100%" stopColor="#ffe57f" />
+                  <stop offset="50%" stopColor="#F3D8FF" />
+                  <stop offset="100%" stopColor="#ffffff" />
                 </linearGradient>
               </defs>
 
@@ -335,9 +335,9 @@ export default function OrderOfTheDayScene() {
                     <defs>
                       <radialGradient id="sunCoreGradient" cx="50%" cy="50%" r="50%">
                         <stop offset="0%" stopColor="#ffffff" />
-                        <stop offset="50%" stopColor="#fff2a8" />
-                        <stop offset="90%" stopColor="#ffd700" />
-                        <stop offset="100%" stopColor="#d4af37" />
+                        <stop offset="50%" stopColor="#F3D8FF" />
+                        <stop offset="90%" stopColor="#C655FD" />
+                        <stop offset="100%" stopColor="#760EAB" />
                       </radialGradient>
                     </defs>
 
@@ -351,7 +351,7 @@ export default function OrderOfTheDayScene() {
                           x2="22"
                           y2="22"
                           transform={`rotate(${i * 30} 22 22)`}
-                          stroke="#ffe885"
+                          stroke="#C655FD"
                           strokeWidth="1.8"
                           strokeLinecap="round"
                         />
@@ -423,9 +423,9 @@ export default function OrderOfTheDayScene() {
                         y2="100%"
                       >
                         <stop offset="0%" stopColor="#ffffff" />
-                        <stop offset="35%" stopColor="#ffe680" />
-                        <stop offset="70%" stopColor="#ffd700" />
-                        <stop offset="100%" stopColor="#d4af37" />
+                        <stop offset="35%" stopColor="#F3D8FF" />
+                        <stop offset="70%" stopColor="#C655FD" />
+                        <stop offset="100%" stopColor="#760EAB" />
                       </linearGradient>
                     </defs>
                     {/* 8 Blooming Lotus Petals */}
@@ -438,7 +438,7 @@ export default function OrderOfTheDayScene() {
                       />
                     ))}
                     <circle cx="30" cy="30" r="4.5" fill="#ffffff" />
-                    <circle cx="30" cy="30" r="2.5" fill="#1a040b" />
+                    <circle cx="30" cy="30" r="2.5" fill="#760EAB" />
                   </svg>
 
                   {/* Sound Cue Trigger Button / Badge */}

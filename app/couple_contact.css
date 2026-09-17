@@ -1,7 +1,7 @@
 /* ==========================================================================
    COUPLE CONTACT & GRAND FINALE ENDING SCENE
    Two Heart-Shaped Contact Units (Groom & Bride)
-   Frameless Farewell Typography (Big outer boxes removed)
+   Frameless Farewell Typography (Light Purple + Silk White Theme)
    ========================================================================== */
 
 .contact-ending-scene {
@@ -10,8 +10,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 30%, #290713 0%, #17030a 55%, #080104 100%);
-  color: #fff;
+  background: radial-gradient(circle at 50% 30%, #4a0468 0%, #2e0143 55%, #150022 100%);
+  color: #ffffff;
   overflow: hidden;
   padding: 80px 20px 100px;
   z-index: 12;
@@ -22,7 +22,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 65% 55% at 50% 40%, rgba(212, 175, 55, 0.11) 0%, transparent 75%);
+  background: radial-gradient(ellipse 65% 55% at 50% 40%, rgba(198, 85, 253, 0.22) 0%, transparent 75%);
   z-index: 1;
 }
 
@@ -38,8 +38,8 @@
   width: 2.5px;
   height: 2.5px;
   border-radius: 50%;
-  background: #fff8d6;
-  box-shadow: 0 0 6px 1.5px rgba(255, 235, 150, 0.7);
+  background: #C655FD;
+  box-shadow: 0 0 8px 2px rgba(198, 85, 253, 0.65);
   animation: contactStarTwinkle 4.5s ease-in-out infinite alternate;
 }
 
@@ -76,9 +76,8 @@
   font-weight: 700;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: #eed58e;
+  color: #C655FD;
   margin-bottom: 10px;
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
 
 .contact-title {
@@ -89,10 +88,10 @@
   line-height: 1.15;
   text-transform: uppercase;
   margin: 0 0 12px;
-  background: linear-gradient(135deg, #ffffff 0%, #fae6c2 45%, #ffd700 85%, #f1a95b 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #F3D8FF 45%, #C655FD 80%, #9A26D7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 14px rgba(212, 175, 55, 0.3));
+  filter: drop-shadow(0 4px 18px rgba(198, 85, 253, 0.4));
 }
 
 .contact-subtitle {
@@ -101,14 +100,14 @@
   font-weight: 400;
   letter-spacing: 0.06em;
   line-height: 1.6;
-  color: #dfceb7;
+  color: #E9D5FF;
   margin: 0 auto;
 }
 
 .contact-gold-divider {
   width: 100px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent);
+  background: linear-gradient(90deg, transparent, rgba(198, 85, 253, 0.5), transparent);
   margin: 20px auto 0;
 }
 
@@ -157,7 +156,7 @@
 
 .contact-heart-card:hover {
   transform: translateY(-6px) scale(1.03);
-  filter: drop-shadow(0 12px 28px rgba(255, 215, 0, 0.22));
+  filter: drop-shadow(0 12px 28px rgba(154, 38, 215, 0.25));
 }
 
 /* Background SVG Heart */
@@ -167,7 +166,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.65));
+  filter: drop-shadow(0 12px 30px rgba(59, 2, 83, 0.12));
   transition: all 0.3s ease;
 }
 
@@ -190,8 +189,9 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(154, 38, 215, 0.12);
+  border: 1px solid rgba(154, 38, 215, 0.35);
+  color: #9A26D7;
   margin-bottom: 8px;
   animation: heartMiniPulse 2.8s ease-in-out infinite;
 }
@@ -206,7 +206,7 @@
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.26em;
-  color: #eed58e;
+  color: #C655FD;
   text-transform: uppercase;
   margin-bottom: 4px;
 }
@@ -218,7 +218,6 @@
   letter-spacing: 0.08em;
   color: #ffffff;
   margin: 0 0 12px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 /* Phone Number Link Inside Heart */
@@ -233,15 +232,14 @@
   font-size: clamp(18px, 2.2vw, 21.5px);
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #ffd700;
-  text-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
+  color: #F3D8FF;
   transition: all 0.25s ease;
   white-space: nowrap;
 }
 
 .contact-phone-link:hover .contact-phone-number {
   color: #ffffff;
-  text-shadow: 0 0 16px rgba(255, 215, 0, 0.8);
+  text-shadow: 0 0 16px rgba(198, 85, 253, 0.8);
 }
 
 /* Action Pill Buttons Sitting Below Heart */
@@ -269,48 +267,51 @@
   letter-spacing: 0.06em;
   text-decoration: none;
   cursor: pointer;
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  background: rgba(30, 5, 13, 0.65);
-  color: #f1dfcf;
+  border: 1px solid rgba(198, 85, 253, 0.35);
+  background: rgba(46, 1, 67, 0.78);
+  color: #E9D5FF;
   transition: all 0.25s ease;
   user-select: none;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(59, 2, 83, 0.08);
 }
 
 /* Call Button */
 .contact-action-pill.call-pill:hover {
-  background: rgba(212, 175, 55, 0.25);
-  border-color: #ffd700;
-  color: #ffd700;
+  background: linear-gradient(135deg, #9A26D7 0%, #760EAB 100%);
+  border-color: #9A26D7;
+  color: #ffffff;
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.3);
 }
 
 /* WhatsApp Button */
 .contact-action-pill.wa-pill:hover {
-  background: rgba(37, 211, 102, 0.18);
+  background: rgba(37, 211, 102, 0.16);
   border-color: #25d366;
-  color: #25d366;
+  color: #16a34a;
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
 }
 
 /* Copy Button */
 .contact-action-pill.copy-pill:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: #ffffff;
+  background: rgba(198, 85, 253, 0.2);
+  border-color: #C655FD;
   color: #ffffff;
   transform: translateY(-2px);
 }
 
 .contact-action-pill.copy-pill.copied {
-  background: rgba(212, 175, 55, 0.32);
-  border-color: #ffd700;
-  color: #ffd700;
+  background: linear-gradient(135deg, #9A26D7 0%, #760EAB 100%);
+  border-color: #9A26D7;
+  color: #ffffff;
 }
 
 /* --------------------------------------------------------------------------
    GRAND FINALE FAREWELL SECTION (Outer Box Removed)
-   Completely frameless, breathing directly against the starry background
+   Completely frameless, breathing directly against the lavender starry background
    -------------------------------------------------------------------------- */
 
 .contact-farewell-section {
@@ -331,7 +332,7 @@
   font-family: "Cinzel", Georgia, serif;
   font-size: 22px;
   font-weight: 700;
-  color: #eed58e;
+  color: #C655FD;
   letter-spacing: 0.12em;
   margin-bottom: 14px;
 }
@@ -340,7 +341,7 @@
   font-family: var(--font-serif), "Cormorant Garamond", Georgia, serif;
   font-style: italic;
   font-size: clamp(16px, 2.2vw, 21px);
-  color: #fae6c2;
+  color: #F3D8FF;
   margin: 0 0 10px;
 }
 
@@ -351,10 +352,10 @@
   letter-spacing: 0.12em;
   color: #ffffff;
   margin: 0 0 18px;
-  background: linear-gradient(135deg, #ffffff 0%, #fae6c2 45%, #ffd700 85%, #f1a95b 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #F3D8FF 45%, #C655FD 80%, #9A26D7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 14px rgba(212, 175, 55, 0.3));
+  filter: drop-shadow(0 4px 18px rgba(198, 85, 253, 0.4));
 }
 
 .farewell-meta {
@@ -366,7 +367,7 @@
   font-family: "Montserrat", sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: #dfceb7;
+  color: #E9D5FF;
   letter-spacing: 0.06em;
   margin-bottom: 24px;
 }
@@ -375,24 +376,24 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #eed58e;
+  color: #F3D8FF;
 }
 
 .farewell-meta-dot {
-  color: rgba(212, 175, 55, 0.5);
+  color: rgba(198, 85, 253, 0.6);
 }
 
 .farewell-blessing {
   font-family: var(--font-serif), "Cormorant Garamond", Georgia, serif;
   font-size: 17px;
   line-height: 1.65;
-  color: #d8c4b0;
+  color: #E9D5FF;
   margin: 0;
 }
 
 .farewell-blessing strong {
   font-family: "Cinzel", Georgia, serif;
   font-size: 18px;
-  color: #ffd700;
+  color: #ffffff;
   letter-spacing: 0.08em;
 }

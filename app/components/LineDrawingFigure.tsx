@@ -129,13 +129,13 @@ export default function LineDrawingFigure({
 
     const targetDist = progress * data.totalLen;
 
-    // Warm Antique Royal Gold Palette
-    ctx.strokeStyle = "rgba(206, 178, 122, 0.82)";
+    // Crisp Silk White Outline Palette
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
     ctx.lineWidth = 2.4;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.shadowColor = "rgba(212, 175, 55, 0.25)";
-    ctx.shadowBlur = 2.5;
+    ctx.shadowColor = "rgba(255, 255, 255, 0.6)";
+    ctx.shadowBlur = 4;
 
     let tipX: number | null = null;
     let tipY: number | null = null;
@@ -190,13 +190,13 @@ export default function LineDrawingFigure({
       }
     }
 
-    // Draw active drawing pen spark / golden pencil tip
+    // Draw active drawing pen spark / white pencil tip
     if (tipX !== null && tipY !== null && progress < 0.99) {
-      // Radiant golden aura around pen tip
+      // Radiant white-lilac aura around pen tip
       const glowGrad = ctx.createRadialGradient(tipX, tipY, 0, tipX, tipY, 16);
-      glowGrad.addColorStop(0, "rgba(255, 245, 190, 0.95)");
-      glowGrad.addColorStop(0.35, "rgba(235, 195, 100, 0.5)");
-      glowGrad.addColorStop(1, "rgba(212, 175, 55, 0)");
+      glowGrad.addColorStop(0, "rgba(255, 255, 255, 0.95)");
+      glowGrad.addColorStop(0.35, "rgba(243, 216, 255, 0.7)");
+      glowGrad.addColorStop(1, "rgba(198, 85, 253, 0)");
 
       ctx.fillStyle = glowGrad;
       ctx.beginPath();
@@ -214,14 +214,14 @@ export default function LineDrawingFigure({
         const tSec = timestamp * 0.005;
         const spark1X = tipX + Math.sin(tSec) * 7;
         const spark1Y = tipY + Math.cos(tSec) * 7;
-        ctx.fillStyle = "rgba(255, 235, 150, 0.7)";
+        ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
         ctx.beginPath();
         ctx.arc(spark1X, spark1Y, 1.3, 0, Math.PI * 2);
         ctx.fill();
 
         const spark2X = tipX - Math.cos(tSec * 1.3) * 10;
         const spark2Y = tipY - Math.sin(tSec * 1.3) * 10;
-        ctx.fillStyle = "rgba(255, 215, 100, 0.5)";
+        ctx.fillStyle = "rgba(243, 216, 255, 0.75)";
         ctx.beginPath();
         ctx.arc(spark2X, spark2Y, 1.0, 0, Math.PI * 2);
         ctx.fill();

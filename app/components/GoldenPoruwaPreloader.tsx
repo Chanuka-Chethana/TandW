@@ -187,10 +187,10 @@ export default function GoldenPoruwaPreloader({ onComplete, isOpen = true }: Pre
           >
             <defs>
               <linearGradient id={mandalaGradId} x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#fff2af" stopOpacity="0.95" />
-                <stop offset="35%" stopColor="#d4af37" stopOpacity="0.8" />
-                <stop offset="70%" stopColor="#f7d377" stopOpacity="0.65" />
-                <stop offset="100%" stopColor="#966b14" stopOpacity="0.4" />
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
+                <stop offset="35%" stopColor="#C655FD" stopOpacity="0.85" />
+                <stop offset="70%" stopColor="#C655FD" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#760EAB" stopOpacity="0.5" />
               </linearGradient>
             </defs>
 
@@ -230,8 +230,8 @@ export default function GoldenPoruwaPreloader({ onComplete, isOpen = true }: Pre
                     fill="none"
                   />
                   {/* Outer Lotus Bead Tip */}
-                  <circle cx="200" cy="22" r="3" fill="#ffeaa8" />
-                  <circle cx="200" cy="35" r="1.5" fill="#d4af37" />
+                  <circle cx="200" cy="22" r="3" fill="#ffffff" />
+                  <circle cx="200" cy="35" r="1.5" fill="#C655FD" />
                 </g>
               );
             })}
@@ -246,30 +246,30 @@ export default function GoldenPoruwaPreloader({ onComplete, isOpen = true }: Pre
           >
             <defs>
               <linearGradient id={petalGradId} x1="30%" y1="0%" x2="70%" y2="100%">
-                <stop offset="0%" stopColor="#fff8db" />
-                <stop offset="25%" stopColor="#fbe090" />
-                <stop offset="65%" stopColor="#d4af37" />
-                <stop offset="100%" stopColor="#8d6215" />
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="25%" stopColor="#F3D8FF" />
+                <stop offset="65%" stopColor="#C655FD" />
+                <stop offset="100%" stopColor="#9A26D7" />
               </linearGradient>
 
               <linearGradient id={innerPetalGradId} x1="50%" y1="0%" x2="50%" y2="100%">
                 <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="35%" stopColor="#ffe794" />
-                <stop offset="75%" stopColor="#d4af37" />
-                <stop offset="100%" stopColor="#9e6f1a" />
+                <stop offset="35%" stopColor="#FAF2FE" />
+                <stop offset="75%" stopColor="#F3D8FF" />
+                <stop offset="100%" stopColor="#C655FD" />
               </linearGradient>
 
               <linearGradient id={strokeGradId} x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
-                <stop offset="50%" stopColor="#ffd978" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#875d11" stopOpacity="0.6" />
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
+                <stop offset="50%" stopColor="#C655FD" stopOpacity="0.85" />
+                <stop offset="100%" stopColor="#760EAB" stopOpacity="0.65" />
               </linearGradient>
 
               <radialGradient id={stamenGradId} cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="40%" stopColor="#ffe994" />
-                <stop offset="75%" stopColor="#d4af37" />
-                <stop offset="100%" stopColor="#7a4f0d" />
+                <stop offset="40%" stopColor="#F3D8FF" />
+                <stop offset="75%" stopColor="#C655FD" />
+                <stop offset="100%" stopColor="#760EAB" />
               </radialGradient>
             </defs>
 
@@ -346,7 +346,7 @@ export default function GoldenPoruwaPreloader({ onComplete, isOpen = true }: Pre
                       y1="103"
                       x2="100"
                       y2="97"
-                      stroke="#ffeaa8"
+                      stroke="#F3D8FF"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       transform={`rotate(${rayAngle} 100 115)`}

@@ -277,21 +277,21 @@ export default function DestinationMapScene() {
             <defs>
               {/* Subtle Linear Gradients */}
               <linearGradient id="routeGoldGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#d4af37" stopOpacity="0.4" />
-                <stop offset="60%" stopColor="#ffd700" stopOpacity="0.9" />
-                <stop offset="100%" stopColor="#fff2be" stopOpacity="1" />
+                <stop offset="0%" stopColor="#C655FD" stopOpacity="0.4" />
+                <stop offset="60%" stopColor="#9A26D7" stopOpacity="0.95" />
+                <stop offset="100%" stopColor="#F3D8FF" stopOpacity="1" />
               </linearGradient>
 
               <radialGradient id="venueGlowRad" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#ffd700" stopOpacity="0.8" />
-                <stop offset="40%" stopColor="#e7305b" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#e7305b" stopOpacity="0" />
+                <stop offset="0%" stopColor="#C655FD" stopOpacity="0.85" />
+                <stop offset="40%" stopColor="#9A26D7" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#760EAB" stopOpacity="0" />
               </radialGradient>
 
               {/* Vehicle Drop Shadow */}
               <filter id="carShadow" x="-30%" y="-30%" width="160%" height="160%">
-                <feDropShadow dx="0" dy="1" stdDeviation="3" floodColor="#000000" floodOpacity="0.8" />
-                <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#ffd700" floodOpacity="0.6" />
+                <feDropShadow dx="0" dy="1" stdDeviation="3" floodColor="#760EAB" floodOpacity="0.3" />
+                <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#C655FD" floodOpacity="0.6" />
               </filter>
             </defs>
 
@@ -406,9 +406,9 @@ export default function DestinationMapScene() {
               <circle r="24" className="map-dest-beacon-inner-pulse" />
               <circle r="36" fill="url(#venueGlowRad)" />
 
-              {/* Pin Base & Ruby Center */}
-              <circle r="8" fill="#1b030b" stroke="#ffd700" strokeWidth="2.5" />
-              <circle r="4" fill="#e7305b" />
+              {/* Pin Base & Center */}
+              <circle r="8" fill="#ffffff" stroke="#760EAB" strokeWidth="2.5" />
+              <circle r="4" fill="#9A26D7" />
 
               {/* Destination Label */}
               <text x="0" y="-34" textAnchor="middle" className="map-dest-label">
@@ -419,7 +419,7 @@ export default function DestinationMapScene() {
               </text>
             </g>
 
-            {/* Tiny Golden Traveling Car Marker */}
+            {/* Traveling Car Marker */}
             <g
               className="map-traveling-car-group"
               transform={`translate(${carTransform.x}, ${carTransform.y}) rotate(${carTransform.angle})`}
@@ -431,7 +431,7 @@ export default function DestinationMapScene() {
                 className="map-car-headlights"
               />
 
-              {/* Sleek Golden Coupe Silhouette (Top View) */}
+              {/* Sleek Coupe Silhouette (Top View) */}
               {/* Main Body */}
               <rect
                 x="-12"
@@ -448,15 +448,15 @@ export default function DestinationMapScene() {
                 width="11"
                 height="8"
                 rx="1.5"
-                fill="#2c0914"
-                stroke="#ffd700"
+                fill="#FAF2FE"
+                stroke="#760EAB"
                 strokeWidth="0.8"
               />
               {/* Front bumper accent */}
-              <rect x="11" y="-4.5" width="2" height="9" rx="1" fill="#ffd700" />
+              <rect x="11" y="-4.5" width="2" height="9" rx="1" fill="#760EAB" />
               {/* Rear tail lights */}
-              <rect x="-12.5" y="-5" width="1.5" height="3" fill="#e7305b" />
-              <rect x="-12.5" y="2" width="1.5" height="3" fill="#e7305b" />
+              <rect x="-12.5" y="-5" width="1.5" height="3" fill="#C655FD" />
+              <rect x="-12.5" y="2" width="1.5" height="3" fill="#C655FD" />
             </g>
           </svg>
         </div>
@@ -511,11 +511,6 @@ export default function DestinationMapScene() {
                     className="dest-qr-img"
                     priority
                   />
-
-                  <div className="dest-qr-tap-badge">
-                    <ExternalLink size={11} />
-                    <span>TAP TO OPEN</span>
-                  </div>
                 </div>
               </a>
             </div>

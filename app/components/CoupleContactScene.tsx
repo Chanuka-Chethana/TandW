@@ -108,22 +108,22 @@ export default function CoupleContactScene() {
                     <defs>
                       <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
                         <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-                        <stop offset="40%" stopColor="#fae6c2" stopOpacity="0.85" />
-                        <stop offset="75%" stopColor="#ffd700" stopOpacity="0.9" />
-                        <stop offset="100%" stopColor="#d4af37" stopOpacity="0.75" />
+                        <stop offset="40%" stopColor="#F5E5FD" stopOpacity="0.9" />
+                        <stop offset="75%" stopColor="#C655FD" stopOpacity="0.95" />
+                        <stop offset="100%" stopColor="#9A26D7" stopOpacity="0.85" />
                       </linearGradient>
                       <linearGradient id={fillId} x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#3d091a" stopOpacity="0.8" />
-                        <stop offset="50%" stopColor="#240510" stopOpacity="0.85" />
-                        <stop offset="100%" stopColor="#120208" stopOpacity="0.92" />
+                        <stop offset="0%" stopColor="#3d0356" stopOpacity="0.9" />
+                        <stop offset="50%" stopColor="#2e0143" stopOpacity="0.88" />
+                        <stop offset="100%" stopColor="#190028" stopOpacity="0.92" />
                       </linearGradient>
                       <filter id={glowId} x="-20%" y="-20%" width="140%" height="140%">
                         <feDropShadow
                           dx="0"
                           dy="8"
                           stdDeviation="14"
-                          floodColor="#d4af37"
-                          floodOpacity="0.22"
+                          floodColor="#C655FD"
+                          floodOpacity="0.28"
                         />
                       </filter>
                     </defs>

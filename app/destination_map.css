@@ -9,8 +9,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 30%, #290713 0%, #17030a 65%, #0d0105 100%);
-  color: #fff;
+  background: radial-gradient(circle at 50% 30%, #4a0468 0%, #2e0143 45%, #150022 100%);
+  color: #ffffff;
   overflow: hidden;
   padding: 70px 20px 80px;
   z-index: 10;
@@ -30,8 +30,8 @@
   width: 2.5px;
   height: 2.5px;
   border-radius: 50%;
-  background: #fff6d6;
-  box-shadow: 0 0 6px 1px rgba(255, 235, 150, 0.75);
+  background: #c655fd;
+  box-shadow: 0 0 6px 1px rgba(154, 38, 215, 0.6);
   animation: destStarTwinkle 4.5s ease-in-out infinite alternate;
 }
 
@@ -106,10 +106,9 @@
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.32em;
-  color: #eed58e;
+  color: #C655FD;
   text-transform: uppercase;
   margin-bottom: 14px;
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
 .dest-pin-icon-wrap {
@@ -122,8 +121,8 @@
 .dest-venue-pin {
   width: 32px;
   height: 32px;
-  color: #e7305b;
-  filter: drop-shadow(0 0 12px rgba(231, 48, 91, 0.8));
+  color: #9A26D7;
+  filter: drop-shadow(0 0 12px rgba(154, 38, 215, 0.6));
   animation: destPinBounce 2.5s ease-in-out infinite;
 }
 
@@ -137,29 +136,29 @@
   font-size: 30px;
   font-weight: 700;
   letter-spacing: 0.16em;
-  background: linear-gradient(135deg, #ffffff 0%, #fff0b8 40%, #e2be68 75%, #a67c2e 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #F3D8FF 45%, #C655FD 80%, #9A26D7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: uppercase;
   margin: 0 0 6px;
-  text-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+  text-shadow: none;
 }
 
 .dest-venue-subtitle {
   font-family: "Montserrat", sans-serif;
   font-size: 13.5px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.12em;
-  color: #dfceb7;
+  color: #E9D5FF;
   margin: 0 0 4px;
 }
 
 .dest-venue-address {
   font-family: "Montserrat", sans-serif;
   font-size: 11.5px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.08em;
-  color: #ad9a82;
+  color: #7C6794;
   margin: 0;
 }
 
@@ -167,7 +166,7 @@
 .dest-divider-line {
   width: 140px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7), transparent);
+  background: linear-gradient(90deg, transparent, rgba(154, 38, 215, 0.5), transparent);
   margin: 18px auto 22px;
 }
 
@@ -187,9 +186,9 @@
   text-transform: uppercase;
   padding: 8px 18px;
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.04);
-  color: #c9bca4;
-  border: 1px solid rgba(212, 175, 55, 0.25);
+  background: rgba(255, 255, 255, 0.75);
+  color: #68427B;
+  border: 1px solid rgba(154, 38, 215, 0.25);
   cursor: pointer;
   transition: all 0.3s ease;
   display: inline-flex;
@@ -198,30 +197,30 @@
 }
 
 .dest-route-tab-btn:hover {
-  background: rgba(212, 175, 55, 0.12);
-  color: #fff;
-  border-color: rgba(212, 175, 55, 0.6);
+  background: rgba(74, 4, 104, 0.85);
+  color: #9A26D7;
+  border-color: #9A26D7;
 }
 
 .dest-route-tab-btn.active {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(140, 95, 25, 0.3) 100%);
-  color: #fff9e6;
-  border-color: #d4af37;
-  box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
+  background: linear-gradient(135deg, #9A26D7 0%, #9A26D7 100%);
+  color: #ffffff;
+  border-color: #9A26D7;
+  box-shadow: 0 0 16px rgba(154, 38, 215, 0.35);
 }
 
 /* ==========================================================================
-   Monochrome Ivory & Gold Map Canvas
+   Porcelain & Purple Map Canvas
    ========================================================================== */
 .dest-map-viewport {
   position: relative;
   width: 100%;
   height: 380px;
   border-radius: 18px;
-  background: radial-gradient(ellipse at 50% 50%, #15050b 0%, #0c0205 100%);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: radial-gradient(ellipse at 50% 50%, #2e0143 0%, #150022 100%);
+  border: 1.5px solid rgba(198, 85, 253, 0.4);
   overflow: hidden;
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(198, 85, 253, 0.12);
 }
 
 .dest-map-svg {
@@ -230,22 +229,22 @@
   display: block;
 }
 
-/* Subtle Map Grid Lines (Monochrome Ivory/Warm Gold) */
+/* Subtle Map Grid Lines (Soft Lilac) */
 .map-grid-line {
-  stroke: rgba(240, 230, 210, 0.06);
+  stroke: rgba(198, 85, 253, 0.12);
   stroke-width: 1;
 }
 
 .map-terrain-contour {
   fill: none;
-  stroke: rgba(212, 175, 55, 0.08);
+  stroke: rgba(198, 85, 253, 0.18);
   stroke-width: 1;
 }
 
 /* Minor Roads */
 .map-minor-road {
   fill: none;
-  stroke: rgba(245, 238, 220, 0.15);
+  stroke: rgba(243, 216, 255, 0.28);
   stroke-width: 1.5;
   stroke-linecap: round;
 }
@@ -253,32 +252,32 @@
 /* Arterial Highways (High Level Rd / Expressway) */
 .map-major-highway {
   fill: none;
-  stroke: rgba(212, 175, 55, 0.35);
+  stroke: rgba(198, 85, 253, 0.55);
   stroke-width: 3.5;
   stroke-linecap: round;
 }
 
 .map-highway-core {
   fill: none;
-  stroke: rgba(255, 248, 220, 0.5);
+  stroke: #ffffff;
   stroke-width: 1.5;
   stroke-linecap: round;
 }
 
-/* Animated Golden Active Journey Route */
+/* Animated Violet Active Journey Route */
 .map-active-route-base {
   fill: none;
-  stroke: rgba(212, 175, 55, 0.25);
+  stroke: rgba(154, 38, 215, 0.3);
   stroke-width: 5;
   stroke-linecap: round;
 }
 
 .map-active-route-glow {
   fill: none;
-  stroke: #ffda6a;
+  stroke: #C655FD;
   stroke-width: 3.5;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.9));
+  filter: drop-shadow(0 0 8px rgba(198, 85, 253, 0.95));
   stroke-dasharray: 8 6;
   animation: routeDashFlow 1.4s linear infinite;
 }
@@ -290,44 +289,44 @@
 
 /* Waypoint Nodes */
 .map-waypoint-circle-bg {
-  fill: #19050c;
-  stroke: rgba(212, 175, 55, 0.6);
+  fill: #2e0143;
+  stroke: #C655FD;
   stroke-width: 2;
 }
 
 .map-waypoint-circle-core {
-  fill: #fff3c9;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.9));
+  fill: #ffffff;
+  filter: drop-shadow(0 0 6px rgba(198, 85, 253, 0.8));
 }
 
 .map-waypoint-label {
   font-family: "Montserrat", sans-serif;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
-  fill: #eed9a8;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+  fill: #ffffff;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
 }
 
 .map-waypoint-sublabel {
   font-family: "Montserrat", sans-serif;
   font-size: 8.5px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.08em;
-  fill: #9e8d77;
+  fill: #E9D5FF;
 }
 
 /* Destination Beacon (Hotel Green Court) */
 .map-dest-beacon-pulse {
-  fill: rgba(231, 48, 91, 0.15);
-  stroke: rgba(231, 48, 91, 0.7);
+  fill: rgba(154, 38, 215, 0.15);
+  stroke: rgba(124, 58, 237, 0.7);
   stroke-width: 1.5;
   animation: destBeaconRing 2.4s ease-out infinite;
 }
 
 .map-dest-beacon-inner-pulse {
-  fill: rgba(212, 175, 55, 0.2);
-  stroke: #ffd700;
+  fill: rgba(198, 85, 253, 0.3);
+  stroke: #9A26D7;
   stroke-width: 1.5;
   animation: destBeaconRing 2.4s ease-out 0.8s infinite;
 }
@@ -342,32 +341,32 @@
   font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.14em;
-  fill: #fff5ce;
-  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
+  fill: #3B0253;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
 }
 
 .map-dest-sublabel {
   font-family: "Montserrat", sans-serif;
   font-size: 9px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.16em;
-  fill: #e8c47b;
+  fill: #9A26D7;
 }
 
-/* Tiny Golden Traveling Car Marker */
+/* Traveling Car Marker */
 .map-traveling-car-group {
-  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1)) drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
+  filter: drop-shadow(0 0 10px rgba(154, 38, 215, 0.8)) drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
   transition: transform 0.05s linear;
 }
 
 .map-car-body {
-  fill: #fff5c0;
-  stroke: #d4af37;
-  stroke-width: 1;
+  fill: #ffffff;
+  stroke: #9A26D7;
+  stroke-width: 1.2;
 }
 
 .map-car-headlights {
-  fill: rgba(255, 255, 200, 0.75);
+  fill: rgba(198, 85, 253, 0.75);
   filter: blur(1.5px);
 }
 
@@ -382,10 +381,10 @@
 }
 
 .dest-control-btn {
-  background: rgba(20, 3, 8, 0.85);
+  background: rgba(46, 1, 67, 0.85);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  color: #f7e6b0;
+  border: 1px solid rgba(198, 85, 253, 0.4);
+  color: #F3D8FF;
   padding: 6px 14px;
   border-radius: 20px;
   font-family: "Montserrat", sans-serif;
@@ -400,9 +399,9 @@
 }
 
 .dest-control-btn:hover {
-  background: rgba(212, 175, 55, 0.2);
-  border-color: #ffd700;
-  color: #fff;
+  background: #600885;
+  border-color: #C655FD;
+  color: #ffffff;
   transform: translateY(-1px);
 }
 
@@ -414,9 +413,9 @@
   gap: 24px;
   margin-top: 22px;
   padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.025);
+  background: rgba(46, 1, 67, 0.75);
   border-radius: 12px;
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(154, 38, 215, 0.2);
 }
 
 .dest-milestone-step {
@@ -427,29 +426,30 @@
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0.12em;
-  color: #dfcdb3;
+  color: #E9D5FF;
 }
 
 .dest-milestone-bullet {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #d4af37;
-  box-shadow: 0 0 6px rgba(212, 175, 55, 0.8);
+  background: #c655fd;
+  box-shadow: 0 0 6px rgba(154, 38, 215, 0.4);
 }
 
 .dest-milestone-arrow {
-  color: rgba(212, 175, 55, 0.6);
+  color: #c655fd;
   font-size: 12px;
 }
 
 .dest-milestone-step.active {
-  color: #fff6d6;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .dest-milestone-step.active .dest-milestone-bullet {
-  background: #e7305b;
-  box-shadow: 0 0 8px rgba(231, 48, 91, 0.9);
+  background: #9A26D7;
+  box-shadow: 0 0 8px rgba(154, 38, 215, 0.8);
 }
 
 /* ==========================================================================
@@ -466,7 +466,7 @@
   font-weight: 700;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #ffffff 0%, #f6deb0 50%, #dfb75e 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #F3D8FF 60%, #C655FD 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0 0 18px;
@@ -478,7 +478,7 @@
 .dest-see-you-bar {
   width: 28px;
   height: 1.5px;
-  background: #d4af37;
+  background: #9A26D7;
   opacity: 0.75;
 }
 
@@ -495,14 +495,13 @@
   display: flex;
   align-items: center;
   gap: 28px;
-  background: linear-gradient(145deg, rgba(46, 12, 24, 0.75) 0%, rgba(20, 3, 10, 0.9) 100%);
-  border: 1.5px solid rgba(212, 175, 55, 0.38);
+  background: rgba(46, 1, 67, 0.78);
+  border: 1.5px solid rgba(198, 85, 253, 0.35);
   border-radius: 20px;
   padding: 24px 28px;
   box-shadow:
-    0 12px 35px -5px rgba(0, 0, 0, 0.65),
-    0 0 25px rgba(212, 175, 55, 0.12),
-    inset 0 0 15px rgba(212, 175, 55, 0.05);
+    0 12px 35px -5px rgba(154, 38, 215, 0.15),
+    0 0 25px rgba(198, 85, 253, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   position: relative;
@@ -510,11 +509,10 @@
 }
 
 .dest-qr-card:hover {
-  border-color: rgba(255, 215, 0, 0.6);
+  border-color: #9A26D7;
   box-shadow:
-    0 16px 42px -5px rgba(0, 0, 0, 0.75),
-    0 0 35px rgba(212, 175, 55, 0.22),
-    inset 0 0 20px rgba(212, 175, 55, 0.08);
+    0 16px 42px -5px rgba(154, 38, 215, 0.25),
+    0 0 35px rgba(198, 85, 253, 0.35);
 }
 
 .dest-qr-visual-wrap {
@@ -533,8 +531,8 @@
   padding: 10px;
   border-radius: 14px;
   box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.5),
-    0 0 0 2px rgba(212, 175, 55, 0.45);
+    0 4px 20px rgba(154, 38, 215, 0.2),
+    0 0 0 2px rgba(154, 38, 215, 0.35);
   overflow: hidden;
   transition: all 0.3s ease;
   display: flex;
@@ -545,17 +543,17 @@
 .dest-qr-link:hover .dest-qr-code-box {
   transform: scale(1.03);
   box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.6),
-    0 0 0 2.5px rgba(255, 215, 0, 0.85),
-    0 0 22px rgba(255, 215, 0, 0.45);
+    0 8px 25px rgba(154, 38, 215, 0.3),
+    0 0 0 2.5px #9A26D7,
+    0 0 22px rgba(198, 85, 253, 0.45);
 }
 
-/* Ornamental gold corner accents around the QR code */
+/* Ornamental corner accents around the QR code */
 .dest-qr-corner {
   position: absolute;
   width: 10px;
   height: 10px;
-  border-color: #d4af37;
+  border-color: #9A26D7;
   border-style: solid;
   pointer-events: none;
   z-index: 3;
@@ -589,15 +587,15 @@
   border-bottom-right-radius: 4px;
 }
 
-/* Subtle luxury laser scan line animation */
+/* Luxury laser scan line animation */
 .dest-qr-scanline {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.9) 50%, transparent 100%);
-  box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.65);
+  background: linear-gradient(90deg, transparent 0%, rgba(154, 38, 215, 0.9) 50%, transparent 100%);
+  box-shadow: 0 0 8px 2px rgba(154, 38, 215, 0.6);
   pointer-events: none;
   z-index: 2;
   animation: qrScanAnim 3.2s ease-in-out infinite;
@@ -628,30 +626,6 @@
   border-radius: 6px;
 }
 
-.dest-qr-tap-badge {
-  position: absolute;
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(27, 3, 11, 0.9);
-  border: 1px solid rgba(212, 175, 55, 0.55);
-  color: #ffd700;
-  font-family: "Montserrat", sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  padding: 3px 8px;
-  border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  opacity: 0.92;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 3;
-}
-
 .dest-qr-content {
   flex: 1;
   display: flex;
@@ -667,17 +641,17 @@
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: #eed58e;
+  color: #9A26D7;
   text-transform: uppercase;
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid rgba(212, 175, 55, 0.32);
+  background: rgba(198, 85, 253, 0.15);
+  border: 1px solid rgba(198, 85, 253, 0.4);
   padding: 4px 12px;
   border-radius: 999px;
   margin-bottom: 10px;
 }
 
 .dest-qr-badge-icon {
-  color: #ffd700;
+  color: #9A26D7;
 }
 
 .dest-qr-title {
@@ -685,7 +659,7 @@
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  background: linear-gradient(135deg, #ffffff 0%, #f6deb0 60%, #dfb75e 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #F3D8FF 60%, #C655FD 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0 0 8px;
@@ -696,13 +670,13 @@
   font-family: "Montserrat", sans-serif;
   font-size: 13px;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.85);
+  color: #E9D5FF;
   margin: 0 0 16px;
 }
 
 .dest-qr-hotel-name {
-  color: #ffd700;
-  font-weight: 600;
+  color: #C655FD;
+  font-weight: 700;
 }
 
 .dest-qr-actions {

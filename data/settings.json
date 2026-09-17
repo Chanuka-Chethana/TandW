@@ -1,0 +1,12 @@
+{
+  "adminPin": "1126",
+  "activeMusic": "/music/wedding-invitation-music.mp3",
+  "musicTitle": "Wedding Invitation by Jason Farnham (Extended Version)",
+  "tracks": [
+    {
+      "src": "/music/wedding-invitation-music.mp3",
+      "title": "Wedding Invitation by Jason Farnham (Extended Version)",
+      "uploadedAt": "2026-09-17T08:00:00.000Z"
+    }
+  ]
+}

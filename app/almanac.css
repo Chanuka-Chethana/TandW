@@ -1,0 +1,948 @@
+/* ==========================================================================
+   Scene 2: Almanac Calendar Date Finding Animation (Sri Lankan Traditional)
+   ========================================================================== */
+
+.almanac-scene-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, #2e0813 0%, #1c040b 55%, #100206 100%);
+  color: #fff;
+  overflow: hidden;
+  padding: 60px 20px;
+  z-index: 10;
+}
+
+/* Celestial Background Aura */
+.almanac-celestial-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Starry background aura */
+.almanac-star {
+  position: absolute;
+  width: 2.5px;
+  height: 2.5px;
+  border-radius: 50%;
+  background: #fff3c4;
+  box-shadow: 0 0 6px 1px rgba(255, 230, 140, 0.8);
+  animation: starTwinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes starTwinkle {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.6);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 0.3;
+    transform: scale(0.7);
+  }
+}
+
+/* Central Stage */
+.almanac-stage {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Header: | THE DAY HAS BEEN CHOSEN
+   -------------------------------------------------------------------------- */
+.almanac-header-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(-14px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.almanac-header-badge.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.almanac-header-badge.hidden-end {
+  opacity: 0 !important;
+  transform: translateY(-20px) !important;
+  pointer-events: none !important;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.almanac-accent-bar {
+  width: 3px;
+  height: 18px;
+  background: linear-gradient(180deg, #fff2af 0%, #d4af37 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+}
+
+.almanac-eyebrow-text {
+  font-family: "Montserrat", "Cinzel", sans-serif;
+  font-size: clamp(11px, 2vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #fbe090;
+  text-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   The Almanac Calendar Card
+   -------------------------------------------------------------------------- */
+.almanac-calendar-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(26, 4, 10, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 18px;
+  padding: 30px 24px 26px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    0 0 35px rgba(212, 175, 55, 0.15),
+    inset 0 0 25px rgba(212, 175, 55, 0.05);
+  opacity: 0;
+  transform: scale(0.92) translateY(16px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+}
+
+.almanac-calendar-card.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Fade away state during phase 6 & 7 */
+.almanac-calendar-card.fade-grid {
+  opacity: 0;
+  transform: scale(0.95) translateY(-10px);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.almanac-calendar-card.minimal-mode {
+  display: none;
+}
+
+/* Traditional Corner Accents */
+.almanac-card-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(255, 235, 170, 0.6);
+  pointer-events: none;
+}
+
+.almanac-card-corner.top-left {
+  top: 8px;
+  left: 8px;
+  border-top: 1.5px solid;
+  border-left: 1.5px solid;
+}
+
+.almanac-card-corner.top-right {
+  top: 8px;
+  right: 8px;
+  border-top: 1.5px solid;
+  border-right: 1.5px solid;
+}
+
+.almanac-card-corner.bottom-left {
+  bottom: 8px;
+  left: 8px;
+  border-bottom: 1.5px solid;
+  border-left: 1.5px solid;
+}
+
+.almanac-card-corner.bottom-right {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 1.5px solid;
+  border-right: 1.5px solid;
+}
+
+/* Month Header */
+.almanac-month-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.almanac-month-title {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(16px, 2.6vw, 20px);
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  color: #fff6cd;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.4);
+}
+
+.almanac-month-title .year-name {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.72em;
+  font-weight: 400;
+  color: #d4af37;
+  letter-spacing: 0.16em;
+}
+
+.almanac-litha-glyph {
+  color: #ffd700;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+  animation: glyphPulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes glyphPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Weekday Labels Grid */
+.almanac-weekdays-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.weekday-label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgba(255, 240, 190, 0.65);
+}
+
+/* Dates Grid */
+.almanac-dates-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px 4px;
+  text-align: center;
+}
+
+.date-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  border-radius: 50%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.82);
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.date-number {
+  position: relative;
+  z-index: 2;
+  font-weight: 500;
+}
+
+/* Trailed Dates during search */
+.date-cell.search-passed {
+  color: #fff6cd;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Golden Searching Ring (Tracks 17 -> 26)
+   -------------------------------------------------------------------------- */
+.golden-search-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid #ffd700;
+  box-shadow:
+    0 0 14px 2px rgba(255, 220, 100, 0.95),
+    inset 0 0 10px rgba(255, 215, 0, 0.4);
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.22) 0%, transparent 80%);
+  animation: ringPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 3;
+}
+
+@keyframes ringPop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.ring-sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px 1px #ffd700;
+}
+
+.ring-sparkle.spark-1 {
+  top: -2px;
+  right: -1px;
+}
+
+.ring-sparkle.spark-2 {
+  bottom: -2px;
+  left: -1px;
+}
+
+/* --------------------------------------------------------------------------
+   Golden Pulse Shockwave when 26 locks
+   -------------------------------------------------------------------------- */
+.golden-search-ring.pulse-shockwave {
+  border-color: #fff6cd;
+  box-shadow:
+    0 0 25px 6px rgba(255, 235, 150, 1),
+    0 0 50px 14px rgba(212, 175, 55, 0.8),
+    inset 0 0 15px rgba(255, 240, 180, 0.7);
+  animation: lockInGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes lockInGlow {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  100% {
+    transform: scale(1.08);
+    filter: brightness(1.3);
+  }
+}
+
+.chosen-shockwave-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 235, 170, 0.9);
+  animation: shockwaveExpand 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+  z-index: 4;
+}
+
+@keyframes shockwaveExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 1;
+    border-width: 3px;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(3.4);
+    opacity: 0;
+    border-width: 0.5px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Phase 7: Final Iconic Reveal in BIG SIZE with floating romantic hearts
+   -------------------------------------------------------------------------- */
+.almanac-final-reveal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(1280px, 98vw);
+  max-width: 1280px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+
+.almanac-final-reveal.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Floating Golden Hearts Cluster */
+.final-hearts-cluster {
+  position: absolute;
+  inset: -60px -40px;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1;
+}
+
+.floating-heart {
+  position: absolute;
+  color: #ffd700;
+  text-shadow:
+    0 0 14px rgba(255, 215, 0, 0.95),
+    0 0 28px rgba(255, 170, 50, 0.6);
+  user-select: none;
+  opacity: 0;
+  animation: heartFloatDrift 5s ease-in-out infinite alternate;
+}
+
+.almanac-final-reveal.visible .floating-heart {
+  opacity: 0.88;
+}
+
+.floating-heart.heart-1 {
+  top: -20px;
+  left: 12%;
+  font-size: 28px;
+  animation-delay: 0s;
+  animation-duration: 4.5s;
+}
+
+.floating-heart.heart-2 {
+  top: -40px;
+  right: 10%;
+  font-size: 34px;
+  animation-delay: 0.8s;
+  animation-duration: 5.2s;
+}
+
+.floating-heart.heart-3 {
+  bottom: -22px;
+  left: 6%;
+  font-size: 24px;
+  animation-delay: 1.4s;
+  animation-duration: 4.8s;
+}
+
+.floating-heart.heart-4 {
+  bottom: -36px;
+  right: 12%;
+  font-size: 30px;
+  animation-delay: 0.5s;
+  animation-duration: 5.5s;
+}
+
+.floating-heart.heart-5 {
+  top: 35%;
+  right: -25px;
+  font-size: 22px;
+  animation-delay: 1.9s;
+  animation-duration: 4.2s;
+}
+
+.floating-heart.heart-6 {
+  top: 45%;
+  left: -20px;
+  font-size: 26px;
+  animation-delay: 2.2s;
+  animation-duration: 5s;
+}
+
+.floating-heart.heart-7 {
+  top: -10px;
+  right: 36%;
+  font-size: 20px;
+  animation-delay: 1.1s;
+  animation-duration: 4.6s;
+}
+
+@keyframes heartFloatDrift {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(0.92);
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(8deg) scale(1.08);
+  }
+
+  100% {
+    transform: translateY(-8px) rotate(-6deg) scale(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hand Heart Drawing & Date Inside Cavity
+   -------------------------------------------------------------------------- */
+.hand-heart-container {
+  position: relative;
+  width: min(1200px, 96vw);
+  max-width: 1200px;
+  aspect-ratio: 1024 / 770;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+}
+
+.hand-heart-container:hover {
+  transform: scale(1.015);
+}
+
+.hand-heart-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
+
+.hand-heart-canvas.active {
+  opacity: 1;
+}
+
+/* Date Inside the Heart Opening */
+.date-inside-heart {
+  position: absolute;
+  top: 48%;
+  left: 49%;
+  transform: translate(-50%, -50%) scale(0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 6;
+  pointer-events: none;
+}
+
+.date-inside-heart.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.heart-date-number-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heart-date-number {
+  font-family: "Cinzel", "Cinzel Decorative", Georgia, serif;
+  font-size: clamp(48px, 6.5vw, 76px);
+  font-weight: 700;
+  line-height: 0.88;
+  background: linear-gradient(135deg, #ffffff 0%, #fff4c6 22%, #d4af37 55%, #ba8a1a 82%, #ffeaa8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 20px rgba(212, 175, 55, 0.75));
+  margin-bottom: 2px;
+}
+
+.heart-date-day {
+  font-family: "Cinzel", "Montserrat", sans-serif;
+  font-size: clamp(12px, 1.7vw, 17px);
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  color: #ffffff;
+  text-shadow:
+    0 0 14px rgba(212, 175, 55, 0.6),
+    0 0 28px rgba(212, 175, 55, 0.25);
+  line-height: 1.15;
+  margin-top: 4px;
+}
+
+.heart-date-month {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(8.5px, 1.1vw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.36em;
+  color: #d4af37;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.45);
+  margin-top: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Actions Below Hand Heart: Universal Save Date Button Only
+   -------------------------------------------------------------------------- */
+.almanac-actions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: clamp(-150px, -12vw, -35px);
+  position: relative;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s,
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.almanac-actions-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Scroll Down Cue Button */
+.scroll-down-cue-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  color: #ffd700;
+  cursor: pointer;
+  padding: 8px 16px;
+  outline: none;
+  transition: all 0.35s ease;
+  user-select: none;
+}
+
+.scroll-down-cue-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: #fff2be;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  transition: all 0.3s ease;
+}
+
+.scroll-down-cue-arrow {
+  color: #ffd700;
+  filter: drop-shadow(0 0 7px rgba(255, 215, 0, 0.8));
+  animation: scrollCueBounce 1.8s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+@keyframes scrollCueBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1));
+  }
+}
+
+.scroll-down-cue-btn:hover .scroll-down-cue-text {
+  color: #ffffff;
+  text-shadow: 0 0 16px rgba(255, 215, 0, 0.9);
+  transform: translateY(1px);
+}
+
+.scroll-down-cue-btn:hover .scroll-down-cue-arrow {
+  color: #ffffff;
+}
+
+/* Universal 1-Click Save Date Button */
+.universal-save-date-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 34px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.32) 0%, rgba(135, 18, 42, 0.6) 50%, rgba(212, 175, 55, 0.32) 100%);
+  border: 1.5px solid rgba(255, 230, 150, 0.8);
+  border-radius: 999px;
+  color: #ffffff;
+  font-family: "Montserrat", "Cinzel", sans-serif;
+  font-size: clamp(11.5px, 1.3vw, 13.5px);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.55),
+    0 0 26px rgba(212, 175, 55, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.universal-save-date-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: #ffffff;
+  background: linear-gradient(135deg, rgba(255, 220, 110, 0.45) 0%, rgba(165, 22, 52, 0.72) 50%, rgba(255, 220, 110, 0.45) 100%);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.65),
+    0 0 38px rgba(255, 215, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.universal-save-date-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-calendar-icon {
+  color: #ffd700;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+  transition: transform 0.3s ease;
+}
+
+.universal-save-date-btn:hover .btn-calendar-icon {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+/* Metallic Shimmer Sweep */
+.btn-glow-shimmer {
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-25deg);
+  pointer-events: none;
+  animation: btnShimmerSweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes btnShimmerSweep {
+
+  0%,
+  65% {
+    left: -120%;
+  }
+
+  100% {
+    left: 220%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Universal Save Toast Notification
+   -------------------------------------------------------------------------- */
+.universal-save-toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 20px;
+  background: rgba(30, 5, 12, 0.94);
+  border: 1px solid rgba(212, 175, 55, 0.7);
+  border-radius: 16px;
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.7),
+    0 0 32px rgba(212, 175, 55, 0.4);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 9999;
+  max-width: min(520px, 92vw);
+  animation: slideToastDown 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideToastDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.toast-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd700 0%, #d4af37 100%);
+  color: #24050d;
+  flex-shrink: 0;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.7);
+}
+
+.toast-content-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toast-main-msg {
+  margin: 0;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff9e6;
+  letter-spacing: 0.04em;
+}
+
+.toast-detail-msg {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  color: rgba(255, 235, 185, 0.85);
+  letter-spacing: 0.02em;
+}
+
+.toast-web-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #ffd700;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.toast-web-link:hover {
+  background: rgba(212, 175, 55, 0.35);
+  color: #ffffff;
+  border-color: #ffd700;
+}
+
+.toast-close-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 235, 185, 0.6);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  margin-left: 2px;
+}
+
+.toast-close-btn:hover {
+  color: #ffffff;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .almanac-calendar-card {
+    padding: 22px 16px 20px;
+  }
+
+  .date-cell {
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .hand-heart-container {
+    width: 96vw;
+  }
+
+  /* Scale date neatly inside hand heart opening on mobile */
+  .date-inside-heart {
+    top: 46.5%;
+    left: 49%;
+  }
+
+  .heart-date-number {
+    font-size: clamp(26px, 7vw, 34px);
+    line-height: 0.88;
+    margin-bottom: 0px;
+    filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.7));
+  }
+
+  .heart-date-day {
+    font-size: clamp(8px, 2.2vw, 10px);
+    letter-spacing: 0.22em;
+    margin-top: 2px;
+    line-height: 1.1;
+  }
+
+  .heart-date-month {
+    font-size: clamp(6px, 1.6vw, 7.5px);
+    letter-spacing: 0.26em;
+    margin-top: 1.5px;
+    line-height: 1.1;
+  }
+
+  .almanac-actions-container {
+    margin-top: -50px;
+  }
+
+  .universal-save-date-btn {
+    padding: 11px 24px;
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 400px) {
+  .date-inside-heart {
+    top: 46%;
+  }
+
+  .heart-date-number {
+    font-size: clamp(22px, 6.5vw, 27px);
+  }
+
+  .heart-date-day {
+    font-size: 7.5px;
+    letter-spacing: 0.18em;
+    margin-top: 1px;
+  }
+
+  .heart-date-month {
+    font-size: 5.5px;
+    letter-spacing: 0.2em;
+    margin-top: 1px;
+  }
+}

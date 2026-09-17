@@ -1,0 +1,18 @@
+[
+  {
+    "id": "rsvp_1789635348067_udn9r",
+    "guest": "Nimal & Champa Silva",
+    "status": "declining",
+    "guestCount": 0,
+    "message": "Congratulations Thushara and Wadusha! So sorry we will be overseas, but sending all our warmest blessings!",
+    "createdAt": "2026-09-17T08:55:48.067Z"
+  },
+  {
+    "id": "rsvp_1789635332388_nic8o",
+    "guest": "Kasun & Sanduni Perera",
+    "status": "attending",
+    "guestCount": 2,
+    "message": "Wishing you both a lifetime of love and happiness together! So excited to celebrate with you.",
+    "createdAt": "2026-09-17T08:55:32.388Z"
+  }
+]

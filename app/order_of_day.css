@@ -1,0 +1,745 @@
+/* ==========================================================================
+   Order of the Day — “THE DAY UNFOLDS”
+   Vertical Animated Golden Timeline with Traditional Scroll Plaque Framing
+   ========================================================================== */
+
+.sundial-scene-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 30%, #2e0815 0%, #1a040b 60%, #0c0105 100%);
+  color: #fff;
+  padding: 85px 20px 80px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Celestial Starlight Dust */
+.sundial-celestial-dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.sundial-dust-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff8db;
+  box-shadow: 0 0 6px 1px rgba(255, 235, 160, 0.7);
+  animation: dustTwinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes dustTwinkle {
+  0% { opacity: 0.15; transform: scale(0.6); }
+  50% { opacity: 0.85; transform: scale(1.1); }
+  100% { opacity: 0.25; transform: scale(0.7); }
+}
+
+/* ==========================================================================
+   Traditional Royal Scroll / Plaque Framing
+   ========================================================================== */
+.scroll-panel-wrapper {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+  padding: 10px 20px 20px;
+}
+
+/* Ornate Traditional Sri Lankan Scroll Corners (Hidden) */
+.scroll-corner {
+  display: none;
+}
+
+/* Inner decorative accent border (Hidden) */
+.scroll-inner-border {
+  display: none;
+}
+
+/* Header Section */
+.sundial-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 2;
+}
+
+.sundial-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "Montserrat", "Cinzel", sans-serif;
+  font-size: clamp(11px, 1.2vw, 12.5px);
+  font-weight: 700;
+  letter-spacing: 0.36em;
+  color: #f7df96;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.sundial-eyebrow-accent {
+  width: 28px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #ffd700, transparent);
+}
+
+.gold-sparkle {
+  color: #ffd700;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+}
+
+.sundial-title {
+  font-family: "Cinzel", "Cinzel Decorative", Georgia, serif;
+  font-size: clamp(30px, 4.5vw, 48px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #ffffff 0%, #fff4c6 25%, #d4af37 65%, #ffd700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 16px rgba(212, 175, 55, 0.5));
+  margin: 0 0 8px 0;
+}
+
+.sundial-subtitle {
+  font-family: "Cinzel", "Montserrat", sans-serif;
+  font-size: clamp(12.5px, 1.4vw, 15px);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: rgba(255, 240, 200, 0.85);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Vertical Timeline Stage
+   ========================================================================== */
+.vertical-timeline-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 10px 0 20px;
+}
+
+/* 1. Rising Tiny Golden Sun at Top */
+.timeline-sun-anchor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
+  z-index: 6;
+}
+
+.timeline-sun-wrap {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(212, 175, 55, 0.05) 70%, transparent 100%);
+  box-shadow: 0 0 24px rgba(255, 215, 0, 0.5);
+  transform: translateY(20px) scale(0.6);
+  opacity: 0;
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-sun-wrap.risen {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.sun-svg-icon {
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.9));
+}
+
+.sun-corona-spin {
+  animation: sunCoronaRotate 18s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes sunCoronaRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sun-core-glow {
+  animation: sunCoreBreathe 2.4s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes sunCoreBreathe {
+  0% { transform: scale(0.92); opacity: 0.9; }
+  100% { transform: scale(1.08); opacity: 1; }
+}
+
+/* ==========================================================================
+   Vertical Spine & Timeline Items
+   ========================================================================== */
+.timeline-spine-arena {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0 10px;
+}
+
+/* Central Golden Vertical Spine SVG Line */
+.timeline-line-svg-container {
+  position: absolute;
+  top: 26px; /* starts directly at the center of the rising sun */
+  left: 175px; /* Center aligned with station dots */
+  width: 16px;
+  height: calc(100% - 50px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.spine-base-track {
+  stroke: rgba(212, 175, 55, 0.22);
+  stroke-width: 2.5;
+  stroke-dasharray: 4 6;
+}
+
+.spine-glow-track {
+  stroke: url(#verticalGoldGlow);
+  stroke-width: 5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.85));
+  transition: stroke-dashoffset 0.08s linear;
+}
+
+.spine-core-track {
+  stroke: url(#verticalGoldCore);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.08s linear;
+}
+
+/* Timeline Milestones Row */
+.timeline-station-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 140px 70px 1fr;
+  align-items: flex-start;
+  margin-bottom: 42px;
+  z-index: 4;
+}
+
+.timeline-station-row.sun-row {
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.sun-dawn-badge {
+  font-family: "Cinzel", "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #ffd700;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sun-dawn-badge.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.timeline-station-row:last-child {
+  margin-bottom: 10px;
+}
+
+/* Left: Time Label */
+.station-time-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  padding-right: 14px;
+  padding-top: 4px;
+  opacity: 0;
+  transform: translateX(-15px);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.station-time-col.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.station-time-text {
+  font-family: "Cinzel", "Montserrat", sans-serif;
+  font-size: clamp(17px, 2vw, 21px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #fff6d2;
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+  line-height: 1.1;
+}
+
+.station-time-badge {
+  font-family: "Montserrat", sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #ffd700;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Center: Station Node Dot */
+.station-node-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: 5px;
+}
+
+.timeline-node-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1a040b;
+  border: 2px solid rgba(212, 175, 55, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+  position: relative;
+  z-index: 5;
+  cursor: pointer;
+  outline: none;
+}
+
+.timeline-node-dot:focus,
+.timeline-node-dot:focus-visible {
+  outline: none;
+}
+
+.timeline-node-dot.reached {
+  background: #ffd700;
+  border-color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.95);
+  transform: scale(1.15);
+}
+
+.node-inner-star {
+  font-size: 8px;
+  color: #1a040b;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.node-pulse-halo {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 215, 0, 0.7);
+  animation: nodeHaloPulse 2s ease-out infinite;
+}
+
+@keyframes nodeHaloPulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Right: Content Card */
+.station-content-col {
+  position: relative;
+  padding-left: 10px;
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.station-content-col.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Card Styling */
+.day-event-card {
+  position: relative;
+  background: rgba(38, 7, 17, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  padding: 24px 24px 20px;
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.4s ease;
+  outline: none;
+  cursor: pointer;
+}
+
+.day-event-card:hover,
+.day-event-card.highlighted {
+  border-color: #ffd700;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.7),
+    0 0 32px rgba(255, 215, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.card-header-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.card-vertical-accent-bar {
+  width: 3.5px;
+  height: 24px;
+  background: linear-gradient(180deg, #ffffff 0%, #ffd700 60%, #b8860b 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  flex-shrink: 0;
+}
+
+.card-title-text {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(17px, 2.2vw, 22px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.card-span-badge {
+  font-family: "Cinzel", "Montserrat", sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffe699;
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+  margin-left: auto;
+}
+
+.card-body-desc {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(12.5px, 1.3vw, 14px);
+  color: rgba(255, 235, 195, 0.88);
+  line-height: 1.6;
+  margin: 0 0 14px 0;
+}
+
+.card-venue-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #ffd700;
+  letter-spacing: 0.06em;
+  padding-top: 10px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* ==========================================================================
+   3. Blooming Lotus / Poruwa Ornament (09:00 AM)
+   ========================================================================== */
+.lotus-ornament-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.blooming-lotus-svg {
+  width: 36px;
+  height: 36px;
+  transform: scale(0.3) rotate(-35deg);
+  opacity: 0;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+  transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.blooming-lotus-svg.bloomed {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+.lotus-petal {
+  fill: url(#lotusGoldGrad);
+  stroke: #ffffff;
+  stroke-width: 0.8;
+  transition: all 0.8s ease;
+}
+
+/* Audio Bell Chime Indicator */
+.temple-bell-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #fff3c4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.temple-bell-badge:hover {
+  background: rgba(212, 175, 55, 0.3);
+  border-color: #ffd700;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   4. Larger Celebration Card (10:00 AM — 4:00 PM)
+   ========================================================================== */
+.day-event-card.grand-celebration {
+  background: rgba(42, 8, 19, 0.82);
+  border-color: rgba(255, 220, 120, 0.5);
+  padding: 28px 28px 24px;
+}
+
+.day-event-card.grand-celebration.highlighted {
+  border-color: #ffd700;
+  box-shadow:
+    0 22px 55px rgba(0, 0, 0, 0.75),
+    0 0 45px rgba(255, 215, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* ==========================================================================
+   5. Terminal Golden Ornamental Flourish (04:00 PM)
+   ========================================================================== */
+.flourish-terminus-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+  opacity: 0;
+  transform: scale(0.6) translateY(-10px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+}
+
+.flourish-terminus-wrap.revealed {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.terminal-flourish-svg {
+  width: 140px;
+  height: 48px;
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7));
+}
+
+.flourish-blessing-text {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: #ffd700;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Interactive Controls & Replay
+   ========================================================================== */
+.timeline-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+  position: relative;
+  z-index: 6;
+}
+
+.timeline-replay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: rgba(212, 175, 55, 0.16);
+  border: 1px solid rgba(255, 230, 140, 0.5);
+  border-radius: 999px;
+  color: #fff5ce;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.timeline-replay-btn:hover {
+  background: rgba(212, 175, 55, 0.32);
+  border-color: #ffd700;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.45);
+}
+
+.timeline-scroll-cue-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+  position: relative;
+  z-index: 6;
+}
+
+.scroll-down-cue-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  color: #ffd700;
+  cursor: pointer;
+  padding: 8px 16px;
+  outline: none;
+  transition: all 0.35s ease;
+  user-select: none;
+}
+
+.scroll-down-cue-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: #fff2be;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  transition: all 0.3s ease;
+}
+
+.scroll-down-cue-arrow {
+  color: #ffd700;
+  filter: drop-shadow(0 0 7px rgba(255, 215, 0, 0.8));
+  animation: scrollCueBounce 1.8s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+@keyframes scrollCueBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1));
+  }
+}
+
+.scroll-down-cue-btn:hover .scroll-down-cue-text {
+  color: #ffffff;
+  text-shadow: 0 0 16px rgba(255, 215, 0, 0.9);
+  transform: translateY(1px);
+}
+
+.scroll-down-cue-btn:hover .scroll-down-cue-arrow {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Mobile Responsiveness
+   ========================================================================== */
+@media (max-width: 768px) {
+  .sundial-scene-container {
+    padding: 65px 14px 60px;
+  }
+
+  .scroll-panel-wrapper {
+    padding: 38px 20px 32px;
+  }
+
+  .timeline-line-svg-container {
+    left: 24px;
+  }
+
+  .timeline-station-row {
+    grid-template-columns: 36px 1fr;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .station-time-col {
+    grid-column: 2;
+    grid-row: 1;
+    align-items: flex-start;
+    text-align: left;
+    padding-right: 0;
+    padding-bottom: 8px;
+  }
+
+  .station-node-col {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding-top: 2px;
+  }
+
+  .station-content-col {
+    grid-column: 2;
+    grid-row: 2;
+    padding-left: 0;
+  }
+
+  .card-header-line {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .card-span-badge {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .day-event-card {
+    padding: 20px 18px 16px;
+  }
+
+  .day-event-card.grand-celebration {
+    padding: 22px 18px 18px;
+  }
+}

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -8,7 +10,16 @@ export async function POST(req: NextRequest) {
     const category = formData.get("category") as string | null; // "photo" or "music"
 
     if (!file) {
-      return NextResponse.json({ error: "No file uploaded." }, { status: 400 });
+      return NextResponse.json({ error: "No file provided in request." }, { status: 400 });
+    }
+
+    if (file.size > 4.5 * 1024 * 1024) {
+      return NextResponse.json(
+        {
+          error: `File size (${(file.size / (1024 * 1024)).toFixed(1)} MB) exceeds 4.5 MB serverless limit. Please use direct cloud upload.`,
+        },
+        { status: 413 }
+      );
     }
 
     const bytes = await file.arrayBuffer();
@@ -16,16 +27,17 @@ export async function POST(req: NextRequest) {
 
     // Sanitize filename
     const originalName = file.name;
-    const ext = originalName.substring(originalName.lastIndexOf(".")).toLowerCase();
-    const baseName = originalName
-      .substring(0, originalName.lastIndexOf("."))
-      .replace(/[^a-zA-Z0-9_-]/g, "-");
+    const dotIndex = originalName.lastIndexOf(".");
+    const ext = dotIndex !== -1 ? originalName.substring(dotIndex).toLowerCase() : "";
+    const baseName = (dotIndex !== -1 ? originalName.substring(0, dotIndex) : originalName)
+      .replace(/[^a-zA-Z0-9_-]/g, "-")
+      .slice(0, 50);
     const uniqueFileName = `${baseName}-${Date.now()}${ext}`;
 
     const isAudio =
       category === "music" ||
       file.type.startsWith("audio/") ||
-      [".mp3", ".wav", ".m4a", ".aac"].includes(ext);
+      [".mp3", ".wav", ".m4a", ".aac", ".ogg"].includes(ext);
 
     // Determine storage path
     const storagePath = isAudio
@@ -36,14 +48,14 @@ export async function POST(req: NextRequest) {
     const { error: uploadError } = await supabase.storage
       .from("uploads")
       .upload(storagePath, buffer, {
-        contentType: file.type || "application/octet-stream",
+        contentType: file.type || (isAudio ? "audio/mpeg" : "image/jpeg"),
         upsert: false,
       });
 
     if (uploadError) {
       console.error("Supabase storage upload error:", uploadError);
       return NextResponse.json(
-        { error: "File upload failed: " + uploadError.message },
+        { error: "Storage upload failed: " + uploadError.message },
         { status: 500 }
       );
     }
@@ -62,8 +74,11 @@ export async function POST(req: NextRequest) {
       originalName,
       isAudio,
     });
-  } catch (err) {
-    console.error("File upload error:", err);
-    return NextResponse.json({ error: "File upload failed." }, { status: 500 });
+  } catch (err: any) {
+    console.error("File upload route error:", err);
+    return NextResponse.json(
+      { error: err?.message || "File upload failed on server." },
+      { status: 500 }
+    );
   }
 }

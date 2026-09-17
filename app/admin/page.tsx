@@ -29,6 +29,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import "./admin.css";
+import { uploadMediaFile } from "../utils/upload";
 
 interface RsvpItem {
   id: string;
@@ -262,27 +263,15 @@ export default function AdminDashboard() {
 
     setIsUploadingPhoto(true);
     try {
-      // 1. Upload file
-      const formData = new FormData();
-      formData.append("file", newPhotoFile);
-      formData.append("category", "photo");
-
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const uploadData = await uploadRes.json();
-
-      if (!uploadData.success) {
-        throw new Error(uploadData.error || "Upload failed");
-      }
+      // 1. Direct upload to Supabase Storage (bypasses Vercel 4.5MB limit)
+      const { url } = await uploadMediaFile(newPhotoFile, "photo");
 
       // 2. Add photo record
       const addRes = await fetch("/api/photos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          src: uploadData.url,
+          src: url,
           caption: newPhotoData.caption || "Cherished Moment",
           isLandscape: newPhotoData.isLandscape,
           rotation: Number(newPhotoData.rotation) || 0,
@@ -295,6 +284,9 @@ export default function AdminDashboard() {
         setNewPhotoFile(null);
         setNewPhotoData({ caption: "", isLandscape: false, rotation: 0 });
         loadPhotos();
+      } else {
+        const errData = await addRes.json().catch(() => ({}));
+        throw new Error(errData.error || "Failed to save photo.");
       }
     } catch (err: any) {
       alert(err.message || "Failed to add photo.");
@@ -316,32 +308,25 @@ export default function AdminDashboard() {
 
     showToast("Uploading replacement image...");
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("category", "photo");
+      const { url } = await uploadMediaFile(file, "photo");
 
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
+      const updateRes = await fetch("/api/photos", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: replacingPhotoId,
+          src: url,
+        }),
       });
-      const uploadData = await uploadRes.json();
-
-      if (uploadData.success) {
-        const updateRes = await fetch("/api/photos", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: replacingPhotoId,
-            src: uploadData.url,
-          }),
-        });
-        if (updateRes.ok) {
-          showToast("Photo replaced successfully!");
-          loadPhotos();
-        }
+      if (updateRes.ok) {
+        showToast("Photo replaced successfully!");
+        loadPhotos();
+      } else {
+        const errData = await updateRes.json().catch(() => ({}));
+        throw new Error(errData.error || "Failed to replace photo.");
       }
-    } catch {
-      alert("Failed to replace image.");
+    } catch (err: any) {
+      alert(err.message || "Failed to replace image.");
     } finally {
       setReplacingPhotoId(null);
       if (replaceFileInputRef.current) replaceFileInputRef.current.value = "";
@@ -448,17 +433,9 @@ export default function AdminDashboard() {
 
     setIsUploadingMusic(true);
     try {
-      const formData = new FormData();
-      formData.append("file", newMusicFile);
-      formData.append("category", "music");
-
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const uploadData = await uploadRes.json();
-
-      if (!uploadData.success) throw new Error(uploadData.error || "Upload failed");
+      showToast("Uploading music track to cloud storage...");
+      // 1. Direct upload to Supabase Storage (bypasses Vercel 4.5MB limit)
+      const { url } = await uploadMediaFile(newMusicFile, "music");
 
       const trackTitle = newMusicTitle.trim() || newMusicFile.name.replace(/\.[^/.]+$/, "");
 
@@ -466,7 +443,7 @@ export default function AdminDashboard() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          activeMusic: uploadData.url,
+          activeMusic: url,
           musicTitle: trackTitle,
         }),
       });
@@ -476,6 +453,9 @@ export default function AdminDashboard() {
         setNewMusicFile(null);
         setNewMusicTitle("");
         loadMusic();
+      } else {
+        const errData = await updateRes.json().catch(() => ({}));
+        throw new Error(errData.error || "Failed to update music settings.");
       }
     } catch (err: any) {
       alert(err.message || "Failed to upload music track.");
@@ -1103,6 +1083,11 @@ export default function AdminDashboard() {
                       onChange={(e) => setNewPhotoFile(e.target.files?.[0] || null)}
                       required
                     />
+                    {newPhotoFile && (
+                      <span style={{ fontSize: "0.8rem", color: "#d4af37", marginTop: "4px", display: "block" }}>
+                        📷 {newPhotoFile.name} ({(newPhotoFile.size / (1024 * 1024)).toFixed(2)} MB)
+                      </span>
+                    )}
                   </label>
 
                   <label className="form-field">
@@ -1225,9 +1210,20 @@ export default function AdminDashboard() {
                   <input
                     type="file"
                     accept="audio/*,.mp3,.m4a,.wav"
-                    onChange={(e) => setNewMusicFile(e.target.files?.[0] || null)}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      setNewMusicFile(file);
+                      if (file && !newMusicTitle) {
+                        setNewMusicTitle(file.name.replace(/\.[^/.]+$/, ""));
+                      }
+                    }}
                     required
                   />
+                  {newMusicFile && (
+                    <span style={{ fontSize: "0.8rem", color: "#d4af37", marginTop: "4px", display: "block" }}>
+                      🎵 {newMusicFile.name} ({(newMusicFile.size / (1024 * 1024)).toFixed(2)} MB)
+                    </span>
+                  )}
                 </label>
                 <label className="form-field flex-3">
                   <span>Track Title (Optional)</span>

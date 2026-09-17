@@ -51,6 +51,7 @@ interface PhotoItem {
 }
 
 interface MusicTrack {
+  id: number;
   src: string;
   title: string;
   uploadedAt: string;
@@ -426,6 +427,10 @@ export default function AdminDashboard() {
 
   const handleUploadMusicSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (tracks.length >= 5) {
+      alert("Maximum limit of 5 soundtracks reached. Please delete an existing track before uploading a new one.");
+      return;
+    }
     if (!newMusicFile) {
       alert("Please choose an MP3 or audio file.");
       return;
@@ -448,19 +453,55 @@ export default function AdminDashboard() {
         }),
       });
 
-      if (updateRes.ok) {
+      const updateData = await updateRes.json().catch(() => ({}));
+
+      if (updateRes.ok && updateData.success) {
         showToast(`New music track uploaded and set as active!`);
         setNewMusicFile(null);
         setNewMusicTitle("");
         loadMusic();
       } else {
-        const errData = await updateRes.json().catch(() => ({}));
-        throw new Error(errData.error || "Failed to update music settings.");
+        throw new Error(updateData.error || "Failed to update music settings.");
       }
     } catch (err: any) {
       alert(err.message || "Failed to upload music track.");
     } finally {
       setIsUploadingMusic(false);
+    }
+  };
+
+  const deleteTrack = async (track: MusicTrack) => {
+    const isActive = activeMusic === track.src;
+    const confirmMsg = isActive
+      ? `"${track.title}" is currently active for wedding guests.\n\nAre you sure you want to delete it? The invitation will automatically switch to another soundtrack.`
+      : `Are you sure you want to delete the soundtrack "${track.title}"?`;
+
+    if (!confirm(confirmMsg)) return;
+
+    try {
+      if (previewTrack === track.src) {
+        if (audioPreviewRef.current) {
+          audioPreviewRef.current.pause();
+        }
+        setPreviewTrack(null);
+      }
+
+      showToast("Removing soundtrack...");
+      const res = await fetch(`/api/music?id=${track.id}`, { method: "DELETE" });
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.success) {
+        showToast(`Soundtrack "${track.title}" deleted.`);
+        if (data.activeMusic) {
+          setActiveMusic(data.activeMusic);
+          setMusicTitle(data.musicTitle || "");
+        }
+        loadMusic();
+      } else {
+        alert(data.error || "Failed to delete soundtrack.");
+      }
+    } catch {
+      alert("Failed to delete soundtrack.");
     }
   };
 
@@ -1200,8 +1241,14 @@ export default function AdminDashboard() {
           <div className="admin-card-box">
             <h3 className="card-box-title">Upload a New Track</h3>
             <p className="card-box-desc">
-              Upload your favorite love song or instrumental (supports MP3, M4A, WAV). It will be set as the live background music immediately.
+              Upload your favorite love song or instrumental (supports MP3, M4A, WAV). Up to 5 soundtracks can be uploaded and managed.
             </p>
+
+            {tracks.length >= 5 && (
+              <div className="track-limit-alert">
+                <span>⚠️ Soundtrack limit reached (5 of 5 used). Please delete an existing track below before uploading a new one.</span>
+              </div>
+            )}
 
             <form onSubmit={handleUploadMusicSubmit} className="music-upload-form">
               <div className="form-row">
@@ -1210,6 +1257,7 @@ export default function AdminDashboard() {
                   <input
                     type="file"
                     accept="audio/*,.mp3,.m4a,.wav"
+                    disabled={tracks.length >= 5 || isUploadingMusic}
                     onChange={(e) => {
                       const file = e.target.files?.[0] || null;
                       setNewMusicFile(file);
@@ -1229,6 +1277,7 @@ export default function AdminDashboard() {
                   <span>Track Title (Optional)</span>
                   <input
                     type="text"
+                    disabled={tracks.length >= 5 || isUploadingMusic}
                     placeholder="e.g. A Thousand Years - Piano Version"
                     value={newMusicTitle}
                     onChange={(e) => setNewMusicTitle(e.target.value)}
@@ -1238,25 +1287,34 @@ export default function AdminDashboard() {
 
               <button
                 type="submit"
-                disabled={isUploadingMusic}
+                disabled={isUploadingMusic || tracks.length >= 5}
                 className="admin-primary-btn"
               >
                 <Upload size={14} />
-                <span>{isUploadingMusic ? "Uploading Track..." : "Upload & Set as Active"}</span>
+                <span>
+                  {tracks.length >= 5
+                    ? "Soundtrack Limit Reached (5/5)"
+                    : isUploadingMusic
+                    ? "Uploading Track..."
+                    : "Upload & Set as Active"}
+                </span>
               </button>
             </form>
           </div>
 
           {/* Playlist / Previous Tracks */}
           <div className="admin-card-box">
-            <h3 className="card-box-title">Available Soundtracks ({tracks.length})</h3>
+            <div className="tracks-list-header">
+              <h3 className="card-box-title">Available Soundtracks ({tracks.length} / 5)</h3>
+              <span className="track-count-badge">{tracks.length} / 5 used</span>
+            </div>
             <div className="tracks-list">
               {tracks.map((track, i) => {
                 const isActive = activeMusic === track.src;
                 const isPlaying = previewTrack === track.src;
 
                 return (
-                  <div key={i} className={`track-list-row ${isActive ? "active-row" : ""}`}>
+                  <div key={track.id || i} className={`track-list-row ${isActive ? "active-row" : ""}`}>
                     <div className="track-row-left">
                       <button
                         type="button"
@@ -1285,6 +1343,15 @@ export default function AdminDashboard() {
                           Set as Active
                         </button>
                       )}
+                      <button
+                        type="button"
+                        className="track-delete-btn"
+                        onClick={() => deleteTrack(track)}
+                        title="Delete soundtrack"
+                        aria-label={`Delete ${track.title}`}
+                      >
+                        <Trash2 size={15} />
+                      </button>
                     </div>
                   </div>
                 );

@@ -522,10 +522,7 @@ export default function DestinationMapScene() {
 
             {/* Information & Direct Navigation Button */}
             <div className="dest-qr-content">
-              <div className="dest-qr-badge">
-                <Sparkles size={13} className="dest-qr-badge-icon" />
-                <span>HOTEL LOCATION QR</span>
-              </div>
+
 
               <h3 className="dest-qr-title">Scan for Hotel Location</h3>
 

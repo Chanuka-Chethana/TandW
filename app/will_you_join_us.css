@@ -439,6 +439,20 @@
   gap: 6px;
 }
 
+.join-us-field-header {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.join-us-field-hint {
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #7B4B93;
+  letter-spacing: 0.02em;
+}
+
 .join-us-field-label span.req {
   color: #dc2626;
 }

@@ -400,7 +400,12 @@ export default function WillYouJoinUsScene({ onRsvpChange }: WillYouJoinUsSceneP
               {/* Number of Guests (Only for Attending) */}
               {selection === "attending" && (
                 <div className="join-us-field">
-                  <label className="join-us-field-label">Number of Guests Attending</label>
+                  <div className="join-us-field-header">
+                    <label className="join-us-field-label">Number of Guests Attending</label>
+                    <span className="join-us-field-hint">
+                      Total seats for your party (including yourself)
+                    </span>
+                  </div>
                   <div className="join-us-guest-pills" role="radiogroup" aria-label="Number of Guests">
                     {[1, 2, 3, 4, 5].map((num) => (
                       <button

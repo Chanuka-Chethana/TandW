@@ -9,10 +9,25 @@ export async function GET() {
 
   if (error) {
     console.error("Error fetching rsvps:", error);
-    return NextResponse.json({ rsvps: [], stats: { totalResponses: 0, attendingCount: 0, decliningCount: 0, totalGuestHeadcount: 0 } });
+    return NextResponse.json({
+      rsvps: [],
+      stats: { totalResponses: 0, attendingCount: 0, decliningCount: 0, totalGuestHeadcount: 0 },
+    });
   }
 
-  const list = rsvps || [];
+  const rawList = rsvps || [];
+
+  // Deduplicate by guest name (case-insensitive), preserving the most recent submission
+  const seenGuests = new Map<string, (typeof rawList)[0]>();
+  for (const r of rawList) {
+    const key = (r.guest || "").trim().toLowerCase();
+    if (!key) continue;
+    if (!seenGuests.has(key)) {
+      seenGuests.set(key, r);
+    }
+  }
+
+  const list = Array.from(seenGuests.values());
   const attendingList = list.filter((r) => r.status === "attending");
   const decliningList = list.filter((r) => r.status === "declining");
 
@@ -40,7 +55,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { guest, status, guestCount, message } = body;
+    const { id, guest, status, guestCount, message } = body;
 
     if (!guest || !status) {
       return NextResponse.json(
@@ -49,27 +64,95 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const trimmedGuest = String(guest).trim();
+    const cleanStatus = status === "attending" ? "attending" : "declining";
+    const count = cleanStatus === "attending" ? Number(guestCount) || 1 : 0;
+    const cleanMessage = message ? String(message).trim() : "";
+
+    // 1. Check if an RSVP record already exists for this guest (by ID or case-insensitive guest name)
+    let existingRecord: { id: string; [key: string]: any } | null = null;
+
+    if (id) {
+      const { data } = await supabase.from("rsvps").select("*").eq("id", id).maybeSingle();
+      if (data) existingRecord = data;
+    }
+
+    if (!existingRecord) {
+      // Look up by case-insensitive name
+      const { data } = await supabase
+        .from("rsvps")
+        .select("*")
+        .ilike("guest", trimmedGuest)
+        .order("created_at", { ascending: false });
+
+      if (data && data.length > 0) {
+        existingRecord = data[0];
+        // Clean up any historical redundant rows with the same guest name
+        if (data.length > 1) {
+          const redundantIds = data.slice(1).map((r) => r.id);
+          await supabase.from("rsvps").delete().in("id", redundantIds);
+        }
+      }
+    }
+
+    if (existingRecord) {
+      // 2. UPDATE existing row in-place instead of creating a duplicate
+      const updatePayload = {
+        guest: trimmedGuest,
+        status: cleanStatus,
+        guest_count: count,
+        message: cleanMessage,
+        created_at: new Date().toISOString(),
+      };
+
+      const { error: updateError } = await supabase
+        .from("rsvps")
+        .update(updatePayload)
+        .eq("id", existingRecord.id);
+
+      if (updateError) {
+        console.error("Error updating RSVP:", updateError);
+        return NextResponse.json({ error: "Failed to update RSVP." }, { status: 500 });
+      }
+
+      return NextResponse.json({
+        success: true,
+        updated: true,
+        rsvp: {
+          id: existingRecord.id,
+          guest: trimmedGuest,
+          status: cleanStatus,
+          guestCount: count,
+          message: cleanMessage,
+          createdAt: updatePayload.created_at,
+        },
+      });
+    }
+
+    // 3. Otherwise, INSERT new row
     const newEntry = {
-      id: `rsvp_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
-      guest: String(guest).trim(),
-      status: status === "attending" ? "attending" : "declining",
-      guest_count: status === "attending" ? Number(guestCount) || 1 : 0,
-      message: message ? String(message).trim() : "",
+      id: id || `rsvp_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      guest: trimmedGuest,
+      status: cleanStatus,
+      guest_count: count,
+      message: cleanMessage,
+      created_at: new Date().toISOString(),
     };
 
-    const { error } = await supabase.from("rsvps").insert(newEntry);
+    const { error: insertError } = await supabase.from("rsvps").insert(newEntry);
 
-    if (error) {
-      console.error("Error inserting RSVP:", error);
+    if (insertError) {
+      console.error("Error inserting RSVP:", insertError);
       return NextResponse.json({ error: "Failed to save RSVP." }, { status: 500 });
     }
 
     return NextResponse.json({
       success: true,
+      updated: false,
       rsvp: {
         ...newEntry,
         guestCount: newEntry.guest_count,
-        createdAt: new Date().toISOString(),
+        createdAt: newEntry.created_at,
       },
     });
   } catch (err) {

@@ -43,6 +43,7 @@ export default function WillYouJoinUsScene({ onRsvpChange }: WillYouJoinUsSceneP
   const [wishMessage, setWishMessage] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [calendarSaved, setCalendarSaved] = useState(false);
+  const [rsvpId, setRsvpId] = useState<string | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animFrameRef = useRef<number | null>(null);
@@ -53,6 +54,7 @@ export default function WillYouJoinUsScene({ onRsvpChange }: WillYouJoinUsSceneP
       const saved = localStorage.getItem("tw_wedding_rsvp");
       if (saved) {
         const parsed = JSON.parse(saved);
+        if (parsed.id) setRsvpId(parsed.id);
         if (parsed.attendance === "attending" || parsed.attendance === "declining") {
           setSelection(parsed.attendance);
           setGuestName(parsed.guest || "");
@@ -85,7 +87,15 @@ export default function WillYouJoinUsScene({ onRsvpChange }: WillYouJoinUsSceneP
 
     setIsConfirmed(true);
 
-    const payload = {
+    const payload: {
+      id?: string;
+      attendance: "attending" | "declining" | null;
+      guest: string;
+      guestCount: number;
+      message: string;
+      timestamp: string;
+    } = {
+      id: rsvpId || undefined,
       attendance: selection,
       guest: guestName.trim(),
       guestCount: selection === "attending" ? guestCount : 0,
@@ -105,12 +115,24 @@ export default function WillYouJoinUsScene({ onRsvpChange }: WillYouJoinUsSceneP
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          id: rsvpId || undefined,
           guest: guestName.trim(),
           status: selection,
           guestCount: selection === "attending" ? guestCount : 0,
           message: wishMessage.trim(),
         }),
-      }).catch((err) => console.error("RSVP sync error:", err));
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.rsvp?.id) {
+            setRsvpId(data.rsvp.id);
+            payload.id = data.rsvp.id;
+            try {
+              localStorage.setItem("tw_wedding_rsvp", JSON.stringify(payload));
+            } catch {}
+          }
+        })
+        .catch((err) => console.error("RSVP sync error:", err));
     } catch (e) {
       // Ignore network errors on client
     }

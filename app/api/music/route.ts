@@ -1,47 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-
-const settingsFilePath = path.join(process.cwd(), "data", "settings.json");
-
-function getSettings() {
-  try {
-    if (!fs.existsSync(settingsFilePath)) {
-      return {
-        adminPin: "1126",
-        activeMusic: "/music/wedding-invitation-music.mp3",
-        musicTitle: "Wedding Invitation by Jason Farnham (Extended Version)",
-        tracks: [
-          {
-            src: "/music/wedding-invitation-music.mp3",
-            title: "Wedding Invitation by Jason Farnham (Extended Version)",
-            uploadedAt: "2026-09-17T08:00:00.000Z",
-          },
-        ],
-      };
-    }
-    const data = fs.readFileSync(settingsFilePath, "utf8");
-    return JSON.parse(data || "{}");
-  } catch (err) {
-    console.error("Error reading settings.json:", err);
-    return {};
-  }
-}
-
-function saveSettings(settings: any) {
-  try {
-    fs.writeFileSync(settingsFilePath, JSON.stringify(settings, null, 2));
-  } catch (err) {
-    console.error("Error writing settings.json:", err);
-  }
-}
+import { supabase } from "@/lib/supabase";
 
 export async function GET() {
-  const settings = getSettings();
+  // Read active music and title from settings table
+  const { data: settingsRows } = await supabase
+    .from("settings")
+    .select("key, value")
+    .in("key", ["active_music", "music_title"]);
+
+  const settingsMap: Record<string, string> = {};
+  (settingsRows || []).forEach((row) => {
+    settingsMap[row.key] = row.value;
+  });
+
+  // Read all tracks from music_tracks table
+  const { data: tracks } = await supabase
+    .from("music_tracks")
+    .select("*")
+    .order("uploaded_at", { ascending: false });
+
   return NextResponse.json({
-    activeMusic: settings.activeMusic || "/music/wedding-invitation-music.mp3",
-    musicTitle: settings.musicTitle || "Wedding Invitation by Jason Farnham",
-    tracks: settings.tracks || [],
+    activeMusic: settingsMap.active_music || "/music/wedding-invitation-music.mp3",
+    musicTitle: settingsMap.music_title || "Wedding Invitation by Jason Farnham",
+    tracks: (tracks || []).map((t) => ({
+      src: t.src,
+      title: t.title,
+      uploadedAt: t.uploaded_at,
+    })),
   });
 }
 
@@ -51,33 +36,59 @@ export async function POST(req: NextRequest) {
     const { activeMusic, musicTitle } = body;
 
     if (!activeMusic) {
-      return NextResponse.json({ error: "Active music track is required." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Active music track is required." },
+        { status: 400 }
+      );
     }
 
-    const settings = getSettings();
-    settings.activeMusic = activeMusic;
-    if (musicTitle) settings.musicTitle = musicTitle;
+    // Update settings
+    await supabase
+      .from("settings")
+      .update({ value: activeMusic })
+      .eq("key", "active_music");
 
-    // Check if track is in playlist, if not add it
-    if (!Array.isArray(settings.tracks)) settings.tracks = [];
-    const exists = settings.tracks.some((t: any) => t.src === activeMusic);
-    if (!exists) {
-      settings.tracks.unshift({
+    if (musicTitle) {
+      await supabase
+        .from("settings")
+        .update({ value: musicTitle })
+        .eq("key", "music_title");
+    }
+
+    // Check if track exists in playlist, if not add it
+    const { data: existing } = await supabase
+      .from("music_tracks")
+      .select("id")
+      .eq("src", activeMusic)
+      .limit(1);
+
+    if (!existing || existing.length === 0) {
+      await supabase.from("music_tracks").insert({
         src: activeMusic,
-        title: musicTitle || path.basename(activeMusic),
-        uploadedAt: new Date().toISOString(),
+        title: musicTitle || activeMusic.split("/").pop() || "Unknown Track",
       });
     }
 
-    saveSettings(settings);
+    // Fetch updated data
+    const { data: tracks } = await supabase
+      .from("music_tracks")
+      .select("*")
+      .order("uploaded_at", { ascending: false });
 
     return NextResponse.json({
       success: true,
-      activeMusic: settings.activeMusic,
-      musicTitle: settings.musicTitle,
-      tracks: settings.tracks,
+      activeMusic,
+      musicTitle: musicTitle || "",
+      tracks: (tracks || []).map((t) => ({
+        src: t.src,
+        title: t.title,
+        uploadedAt: t.uploaded_at,
+      })),
     });
   } catch (err) {
-    return NextResponse.json({ error: "Failed to update music settings." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update music settings." },
+      { status: 500 }
+    );
   }
 }

@@ -1,53 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-
-const rsvpFilePath = path.join(process.cwd(), "data", "rsvps.json");
-
-function getRsvps() {
-  try {
-    if (!fs.existsSync(rsvpFilePath)) {
-      fs.writeFileSync(rsvpFilePath, JSON.stringify([], null, 2));
-      return [];
-    }
-    const data = fs.readFileSync(rsvpFilePath, "utf8");
-    return JSON.parse(data || "[]");
-  } catch (err) {
-    console.error("Error reading rsvps.json:", err);
-    return [];
-  }
-}
-
-function saveRsvps(rsvps: any[]) {
-  try {
-    fs.writeFileSync(rsvpFilePath, JSON.stringify(rsvps, null, 2));
-  } catch (err) {
-    console.error("Error writing rsvps.json:", err);
-  }
-}
+import { supabase } from "@/lib/supabase";
 
 export async function GET() {
-  const rsvps = getRsvps();
+  const { data: rsvps, error } = await supabase
+    .from("rsvps")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-  const totalResponses = rsvps.length;
-  const attendingList = rsvps.filter((r: any) => r.status === "attending");
-  const decliningList = rsvps.filter((r: any) => r.status === "declining");
+  if (error) {
+    console.error("Error fetching rsvps:", error);
+    return NextResponse.json({ rsvps: [], stats: { totalResponses: 0, attendingCount: 0, decliningCount: 0, totalGuestHeadcount: 0 } });
+  }
 
-  const attendingCount = attendingList.length;
-  const decliningCount = decliningList.length;
-
-  const totalGuestHeadcount = attendingList.reduce(
-    (sum: number, r: any) => sum + (Number(r.guestCount) || 1),
-    0
-  );
+  const list = rsvps || [];
+  const attendingList = list.filter((r) => r.status === "attending");
+  const decliningList = list.filter((r) => r.status === "declining");
 
   return NextResponse.json({
-    rsvps,
+    rsvps: list.map((r) => ({
+      id: r.id,
+      guest: r.guest,
+      status: r.status,
+      guestCount: r.guest_count,
+      message: r.message,
+      createdAt: r.created_at,
+    })),
     stats: {
-      totalResponses,
-      attendingCount,
-      decliningCount,
-      totalGuestHeadcount,
+      totalResponses: list.length,
+      attendingCount: attendingList.length,
+      decliningCount: decliningList.length,
+      totalGuestHeadcount: attendingList.reduce(
+        (sum, r) => sum + (Number(r.guest_count) || 1),
+        0
+      ),
     },
   });
 }
@@ -64,21 +49,29 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const rsvps = getRsvps();
     const newEntry = {
       id: `rsvp_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       guest: String(guest).trim(),
       status: status === "attending" ? "attending" : "declining",
-      guestCount: status === "attending" ? Number(guestCount) || 1 : 0,
+      guest_count: status === "attending" ? Number(guestCount) || 1 : 0,
       message: message ? String(message).trim() : "",
-      createdAt: new Date().toISOString(),
     };
 
-    // Prepend new entry
-    rsvps.unshift(newEntry);
-    saveRsvps(rsvps);
+    const { error } = await supabase.from("rsvps").insert(newEntry);
 
-    return NextResponse.json({ success: true, rsvp: newEntry });
+    if (error) {
+      console.error("Error inserting RSVP:", error);
+      return NextResponse.json({ error: "Failed to save RSVP." }, { status: 500 });
+    }
+
+    return NextResponse.json({
+      success: true,
+      rsvp: {
+        ...newEntry,
+        guestCount: newEntry.guest_count,
+        createdAt: new Date().toISOString(),
+      },
+    });
   } catch (err) {
     console.error("Error submitting RSVP:", err);
     return NextResponse.json(
@@ -97,11 +90,14 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: "ID is required." }, { status: 400 });
     }
 
-    const rsvps = getRsvps();
-    const updated = rsvps.filter((r: any) => r.id !== id);
-    saveRsvps(updated);
+    const { error } = await supabase.from("rsvps").delete().eq("id", id);
 
-    return NextResponse.json({ success: true, count: updated.length });
+    if (error) {
+      console.error("Error deleting RSVP:", error);
+      return NextResponse.json({ error: "Failed to delete RSVP." }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
   } catch (err) {
     return NextResponse.json(
       { error: "Failed to delete RSVP." },

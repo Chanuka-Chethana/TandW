@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { supabase } from "@/lib/supabase";
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,8 +16,10 @@ export async function POST(req: NextRequest) {
 
     // Sanitize filename
     const originalName = file.name;
-    const ext = path.extname(originalName).toLowerCase();
-    const baseName = path.basename(originalName, ext).replace(/[^a-zA-Z0-9_-]/g, "-");
+    const ext = originalName.substring(originalName.lastIndexOf(".")).toLowerCase();
+    const baseName = originalName
+      .substring(0, originalName.lastIndexOf("."))
+      .replace(/[^a-zA-Z0-9_-]/g, "-");
     const uniqueFileName = `${baseName}-${Date.now()}${ext}`;
 
     const isAudio =
@@ -26,23 +27,33 @@ export async function POST(req: NextRequest) {
       file.type.startsWith("audio/") ||
       [".mp3", ".wav", ".m4a", ".aac"].includes(ext);
 
-    let targetDir = "";
-    let publicUrl = "";
+    // Determine storage path
+    const storagePath = isAudio
+      ? `music/${uniqueFileName}`
+      : `photos/${uniqueFileName}`;
 
-    if (isAudio) {
-      targetDir = path.join(process.cwd(), "public", "music");
-      publicUrl = `/music/${uniqueFileName}`;
-    } else {
-      targetDir = path.join(process.cwd(), "public", "photos", "moments");
-      publicUrl = `/photos/moments/${uniqueFileName}`;
+    // Upload to Supabase Storage
+    const { error: uploadError } = await supabase.storage
+      .from("uploads")
+      .upload(storagePath, buffer, {
+        contentType: file.type || "application/octet-stream",
+        upsert: false,
+      });
+
+    if (uploadError) {
+      console.error("Supabase storage upload error:", uploadError);
+      return NextResponse.json(
+        { error: "File upload failed: " + uploadError.message },
+        { status: 500 }
+      );
     }
 
-    if (!fs.existsSync(targetDir)) {
-      fs.mkdirSync(targetDir, { recursive: true });
-    }
+    // Get the public URL
+    const { data: publicUrlData } = supabase.storage
+      .from("uploads")
+      .getPublicUrl(storagePath);
 
-    const targetPath = path.join(targetDir, uniqueFileName);
-    fs.writeFileSync(targetPath, buffer);
+    const publicUrl = publicUrlData?.publicUrl || "";
 
     return NextResponse.json({
       success: true,

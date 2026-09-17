@@ -23,7 +23,14 @@ export async function GET() {
     rotation: p.rotation,
   }));
 
-  return NextResponse.json({ photos: mapped });
+  return NextResponse.json(
+    { photos: mapped },
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=86400",
+      },
+    }
+  );
 }
 
 export async function POST(req: NextRequest) {

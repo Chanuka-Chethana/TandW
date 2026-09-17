@@ -19,15 +19,22 @@ export async function GET() {
     .select("*")
     .order("uploaded_at", { ascending: false });
 
-  return NextResponse.json({
-    activeMusic: settingsMap.active_music || "/music/wedding-invitation-music.mp3",
-    musicTitle: settingsMap.music_title || "Wedding Invitation by Jason Farnham",
-    tracks: (tracks || []).map((t) => ({
-      src: t.src,
-      title: t.title,
-      uploadedAt: t.uploaded_at,
-    })),
-  });
+  return NextResponse.json(
+    {
+      activeMusic: settingsMap.active_music || "/music/wedding-invitation-music.mp3",
+      musicTitle: settingsMap.music_title || "Wedding Invitation by Jason Farnham",
+      tracks: (tracks || []).map((t) => ({
+        src: t.src,
+        title: t.title,
+        uploadedAt: t.uploaded_at,
+      })),
+    },
+    {
+      headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=86400",
+      },
+    }
+  );
 }
 
 export async function POST(req: NextRequest) {

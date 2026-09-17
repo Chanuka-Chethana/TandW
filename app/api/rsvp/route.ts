@@ -49,6 +49,10 @@ export async function GET() {
         0
       ),
     },
+  }, {
+    headers: {
+      "Cache-Control": "no-store, no-cache, must-revalidate",
+    },
   });
 }
 

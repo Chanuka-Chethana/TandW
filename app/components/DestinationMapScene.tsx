@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   MapPin,
   Navigation,
@@ -78,7 +79,7 @@ const ROUTES: Record<"colombo" | "kaduwela", RouteDefinition> = {
 const VENUE_COORDS = { x: 680, y: 235 };
 
 const GOOGLE_MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=Hotel+Green+Court+Homagama+Sri+Lanka";
+  "https://maps.app.goo.gl/JMA4mU4P6sHxFWwL7?g_st=ic";
 
 export default function DestinationMapScene() {
   const [selectedRoute, setSelectedRoute] = useState<"colombo" | "kaduwela">("colombo");
@@ -480,25 +481,78 @@ export default function DestinationMapScene() {
           ))}
         </div>
 
-        {/* Footer Action: "WE'LL SEE YOU THERE" & Get Directions Button */}
-        <div className="dest-footer-action-wrap">
+        {/* Hotel Location QR Code & Navigation Card */}
+        <div className="dest-qr-section">
+          <div className="dest-qr-card">
+            {/* Visual Frame: QR Code with Gold Accents */}
+            <div className="dest-qr-visual-wrap">
+              <a
+                href={GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="dest-qr-link"
+                title="Scan or tap to open Hotel Green Court location in Google Maps"
+              >
+                <div className="dest-qr-code-box">
+                  {/* Subtle traditional gold ornamental corners */}
+                  <span className="dest-qr-corner dest-qr-corner-tl" />
+                  <span className="dest-qr-corner dest-qr-corner-tr" />
+                  <span className="dest-qr-corner dest-qr-corner-bl" />
+                  <span className="dest-qr-corner dest-qr-corner-br" />
 
+                  {/* Subtle futuristic / luxury laser scan line */}
+                  <div className="dest-qr-scanline" aria-hidden="true" />
 
-          <div>
-            <a
-              href={GOOGLE_MAPS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="dest-directions-btn google-maps-btn"
-              title="Open Hotel Green Court in Google Maps for turn-by-turn navigation"
-            >
-              <GoogleMapsPinIcon size={22} />
-              <span className="google-maps-btn-text">Open in Google Maps</span>
-              <ExternalLink size={15} className="google-maps-btn-arrow" />
-            </a>
+                  <Image
+                    src="/images/hotel_location_qr.png"
+                    alt="Hotel Green Court Google Maps Location QR Code"
+                    width={150}
+                    height={150}
+                    className="dest-qr-img"
+                    priority
+                  />
+
+                  <div className="dest-qr-tap-badge">
+                    <ExternalLink size={11} />
+                    <span>TAP TO OPEN</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            {/* Information & Direct Navigation Button */}
+            <div className="dest-qr-content">
+              <div className="dest-qr-badge">
+                <Sparkles size={13} className="dest-qr-badge-icon" />
+                <span>HOTEL LOCATION QR</span>
+              </div>
+
+              <h3 className="dest-qr-title">Scan for Hotel Location</h3>
+
+              <p className="dest-qr-instruction">
+                Scan with your phone camera for live turn-by-turn navigation to{" "}
+                <strong className="dest-qr-hotel-name">Hotel Green Court</strong>, Homagama.
+              </p>
+
+              <div className="dest-qr-actions">
+                <a
+                  href={GOOGLE_MAPS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="dest-directions-btn google-maps-btn"
+                  title="Open Hotel Green Court in Google Maps for turn-by-turn navigation"
+                >
+                  <GoogleMapsPinIcon size={20} />
+                  <span className="google-maps-btn-text">Open in Google Maps</span>
+                  <ExternalLink size={14} className="google-maps-btn-arrow" />
+                </a>
+              </div>
+            </div>
           </div>
+        </div>
 
-          {/* Scroll Down Cue to Wedding Details */}
+        {/* Scroll Down Cue to Wedding Details */}
+        <div className="dest-footer-action-wrap">
           <div className="dest-scroll-cue-wrap">
             <button
               type="button"

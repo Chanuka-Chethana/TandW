@@ -494,7 +494,7 @@ export default function AdminDashboard() {
       setPreviewTrack(src);
       if (audioPreviewRef.current) {
         audioPreviewRef.current.src = src;
-        audioPreviewRef.current.play().catch(() => {});
+        audioPreviewRef.current.play().catch(() => { });
       }
     }
   };
@@ -1355,7 +1355,7 @@ export default function AdminDashboard() {
               Share this link with your guests or preview your changes:
             </p>
             <div className="invite-link-box">
-              <code>http://localhost:3001/</code>
+              <code>https://thusharaandwadusha.vercel.app</code>
               <Link href="/" target="_blank" className="admin-secondary-btn">
                 Open Link ↗
               </Link>

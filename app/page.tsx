@@ -8,6 +8,7 @@ import AlmanacCalendarScene from "./components/AlmanacCalendarScene";
 import OrderOfTheDayScene from "./components/OrderOfTheDayScene";
 import LiveCountdownScene from "./components/LiveCountdownScene";
 import DestinationMapScene from "./components/DestinationMapScene";
+import FamilyBlessingsScene from "./components/FamilyBlessingsScene";
 import WillYouJoinUsScene from "./components/WillYouJoinUsScene";
 import MomentsWeLoveScene from "./components/MomentsWeLoveScene";
 import CoupleContactScene from "./components/CoupleContactScene";
@@ -15,6 +16,7 @@ import CoupleContactScene from "./components/CoupleContactScene";
 import "./order_of_day.css";
 import "./countdown.css";
 import "./destination_map.css";
+import "./family_blessings.css";
 import "./will_you_join_us.css";
 import "./moments_we_love.css";
 import "./couple_contact.css";
@@ -135,7 +137,10 @@ export default function Home() {
       {/* Scene 5: Destination Mini Animated Map (Directly after Countdown) */}
       <DestinationMapScene />
 
-      {/* Scene 6: "Will You Join Us?" — Heartfelt Acceptance/Decline & RSVP Stationery (Directly after Location) */}
+      {/* Scene 6: "With the Blessings of Our Families" — Honoring Groom & Bride Parents */}
+      <FamilyBlessingsScene />
+
+      {/* Scene 7: "Will You Join Us?" — Heartfelt Acceptance/Decline & RSVP Stationery (Directly after Families) */}
       <WillYouJoinUsScene />
 
       {/* Scene 7: "Moments We Love" — Floating Photographs Scene */}

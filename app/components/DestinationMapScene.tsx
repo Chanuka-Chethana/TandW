@@ -185,7 +185,10 @@ export default function DestinationMapScene() {
   };
 
   const handleScrollToInvitation = () => {
-    const el = document.getElementById("will-you-join-us") || document.getElementById("home");
+    const el =
+      document.getElementById("family-blessings-scene") ||
+      document.getElementById("will-you-join-us") ||
+      document.getElementById("home");
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 

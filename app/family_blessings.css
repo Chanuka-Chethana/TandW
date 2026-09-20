@@ -276,7 +276,7 @@
 /* Couple Names: Bolder, Regal Cinzel (Weight 800) */
 .family-couple-names {
   font-family: "Cinzel", "Cinzel Decorative", "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(20px, 4.2vw, 32px);
+  font-size: clamp(30px, 7vw, 64px);
   font-weight: 800;
   letter-spacing: 0.13em;
   line-height: 1.18;

@@ -93,7 +93,7 @@ export default function FamilyBlessingsScene() {
             <div className="branch-names-block">
               <div className="parent-primary-name">MR. L.P. PUSHPA KUMARA</div>
               <div className="parent-tribute-line">
-                
+                <span className="tribute-amp">&</span>
                 <span className="parent-primary-name">MRS. PUSHPAKUMARA</span>
               </div>
             </div>

@@ -110,7 +110,7 @@ export default function FamilyBlessingsScene() {
             <h3 className="branch-relation-label">LOVING DAUGHTER OF</h3>
             <div className="branch-names-block">
               <div className="parent-primary-name">MR. U.K. PREMALAL</div>
-              <span className="tribute-amp">&</span>
+              <div className="parent-ampersand-bridge">&amp;</div>
               <div className="parent-primary-name">MRS. N.A.K. SUDHARMA PRIYANGANI</div>
             </div>
           </div>

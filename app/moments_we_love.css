@@ -462,6 +462,41 @@
   width: clamp(115px, 14vw, 150px);
 }
 
+.photo-item-12 {
+  left: calc(50% + 310px);
+  top: calc(50% + 80px);
+  width: clamp(115px, 14vw, 150px);
+}
+
+.photo-item-13 {
+  left: calc(50% - 240px);
+  top: calc(50% + 180px);
+  width: clamp(115px, 14vw, 150px);
+}
+
+.photo-item-14 {
+  left: calc(50% + 80px);
+  top: calc(50% + 190px);
+  width: clamp(115px, 14vw, 150px);
+}
+
+.photo-item-15 {
+  left: calc(50% - 300px);
+  top: calc(50% - 210px);
+  width: clamp(115px, 14vw, 150px);
+}
+
+.photo-item-16 {
+  left: calc(50% + 200px);
+  top: calc(50% - 220px);
+  width: clamp(115px, 14vw, 150px);
+}
+
+/* Fallback for any dynamically added photo beyond 16 */
+.peripheral-print {
+  width: clamp(120px, 15vw, 160px);
+}
+
 /* Subtle settled breathing micro-animation when settled */
 .moments-viewport-table.is-settled .printed-photo:not(:hover) {
   animation: photoSettleBreathe 6s ease-in-out infinite alternate;

@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   const { data: photos, error } = await supabase
     .from("photos")
@@ -9,7 +12,14 @@ export async function GET() {
 
   if (error) {
     console.error("Error fetching photos:", error);
-    return NextResponse.json({ photos: [] });
+    return NextResponse.json(
+      { photos: [] },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+      }
+    );
   }
 
   // Map DB snake_case to frontend camelCase
@@ -27,7 +37,7 @@ export async function GET() {
     { photos: mapped },
     {
       headers: {
-        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=86400",
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
       },
     }
   );
@@ -68,13 +78,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Source URL is required." }, { status: 400 });
     }
 
-    // Get the next sort_order
+    // Get the next sort_order using maybeSingle to avoid 406 on empty tables
     const { data: maxRow } = await supabase
       .from("photos")
       .select("sort_order")
       .order("sort_order", { ascending: false })
       .limit(1)
-      .single();
+      .maybeSingle();
 
     const nextOrder = (maxRow?.sort_order || 0) + 1;
 
@@ -92,9 +102,9 @@ export async function POST(req: NextRequest) {
       .from("photos")
       .insert(newPhoto)
       .select()
-      .single();
+      .maybeSingle();
 
-    if (error) {
+    if (error || !inserted) {
       console.error("Error adding photo:", error);
       return NextResponse.json({ error: "Failed to add photo." }, { status: 500 });
     }
@@ -137,11 +147,14 @@ export async function PUT(req: NextRequest) {
       .update(updates)
       .eq("id", Number(id))
       .select()
-      .single();
+      .maybeSingle();
 
-    if (error) {
+    if (error || !updated) {
       console.error("Error updating photo:", error);
-      return NextResponse.json({ error: "Failed to update photo." }, { status: 500 });
+      return NextResponse.json(
+        { error: error?.message || `Photo with ID ${id} not found.` },
+        { status: error ? 500 : 404 }
+      );
     }
 
     return NextResponse.json({

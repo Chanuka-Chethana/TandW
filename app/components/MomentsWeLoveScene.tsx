@@ -147,7 +147,7 @@ export default function MomentsWeLoveScene() {
 
   // Fetch dynamic photos list from /api/photos
   useEffect(() => {
-    fetch("/api/photos")
+    fetch(`/api/photos?t=${Date.now()}`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.photos && Array.isArray(data.photos) && data.photos.length > 0) {

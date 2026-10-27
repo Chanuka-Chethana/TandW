@@ -245,7 +245,7 @@ export default function AdminDashboard() {
   const loadPhotos = async () => {
     setIsLoadingPhotos(true);
     try {
-      const res = await fetch("/api/photos");
+      const res = await fetch(`/api/photos?t=${Date.now()}`, { cache: "no-store" });
       const data = await res.json();
       setPhotos(data.photos || []);
     } catch (err) {
@@ -971,6 +971,7 @@ export default function AdminDashboard() {
                     width={photo.width || 400}
                     height={photo.height || 400}
                     className="admin-photo-thumb"
+                    unoptimized
                   />
                   <span className="admin-photo-index">✦ {String(index + 1).padStart(2, "0")}</span>
                   <span className="admin-photo-aspect">

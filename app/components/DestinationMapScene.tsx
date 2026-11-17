@@ -226,6 +226,7 @@ export default function DestinationMapScene() {
           </div>
 
           <h2 className="dest-venue-title">HOTEL GREEN COURT</h2>
+          <p className="dest-venue-hall">Grand Ball Room Banquet Hall</p>
           <p className="dest-venue-subtitle">610 Galawila Rd, Homagama</p>
 
 
@@ -418,7 +419,7 @@ export default function DestinationMapScene() {
                 HOTEL GREEN COURT
               </text>
               <text x="0" y="-20" textAnchor="middle" className="map-dest-sublabel">
-                HOMAGAMA · DESTINATION
+                GRAND BALL ROOM · HOMAGAMA
               </text>
             </g>
 
@@ -526,7 +527,7 @@ export default function DestinationMapScene() {
 
               <p className="dest-qr-instruction">
                 Scan with your phone camera for live turn-by-turn navigation to{" "}
-                <strong className="dest-qr-hotel-name">Hotel Green Court</strong>, Homagama.
+                <strong className="dest-qr-hotel-name">Hotel Green Court</strong> (Grand Ball Room Banquet Hall), Homagama.
               </p>
 
               <div className="dest-qr-actions">

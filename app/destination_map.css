@@ -144,6 +144,17 @@
   text-shadow: none;
 }
 
+.dest-venue-hall {
+  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #F3D8FF;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+  text-shadow: 0 0 10px rgba(198, 85, 253, 0.4);
+}
+
 .dest-venue-subtitle {
   font-family: "Montserrat", sans-serif;
   font-size: 13.5px;
@@ -762,6 +773,11 @@
   .dest-venue-title {
     font-size: 22px;
     letter-spacing: 0.12em;
+  }
+
+  .dest-venue-hall {
+    font-size: 13px;
+    letter-spacing: 0.11em;
   }
 
   .dest-map-viewport {

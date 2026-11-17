@@ -294,7 +294,7 @@ export default function AlmanacCalendarScene({
           <div className="toast-content-wrap">
             <p className="toast-main-msg">Wedding Date Saved to Your Calendar!</p>
             <p className="toast-detail-msg">
-              Thursday, 26 November 2026 · 9:00 AM – 4:00 PM · Hotel Green Court, Homagama
+              Thursday, 26 November 2026 · 9:00 AM – 4:00 PM · Grand Ball Room Banquet Hall, Hotel Green Court, Homagama
             </p>
           </div>
           {toastInfo.platform === "windows" && (

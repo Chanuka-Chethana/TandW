@@ -19,9 +19,9 @@ export const WEDDING_EVENT: WeddingEventDetails = {
   title: "Wedding of Thushara & Wadusha",
   startDate: "20261126T033000Z", // Nov 26, 2026 09:00 AM Asia/Colombo (UTC+5:30) = 03:30 UTC
   endDate: "20261126T103000Z", // Nov 26, 2026 04:00 PM Asia/Colombo = 10:30 UTC
-  location: "Hotel Green Court, No. 6, Jaya Mawatha, Galawilawatta, Homagama, Sri Lanka",
+  location: "Grand Ball Room Banquet Hall, Hotel Green Court, No. 6, Jaya Mawatha, Galawilawatta, Homagama, Sri Lanka",
   description:
-    "We invite you to celebrate our wedding day with us!\n\nORDER OF THE DAY:\n• 09:00 AM — Poruwe Charithra (Traditional Auspicious Ceremony)\n• 10:00 AM – 04:00 PM — Wedding Celebration & Reception\n\nVenue: Hotel Green Court, Homagama, Sri Lanka",
+    "We invite you to celebrate our wedding day with us!\n\nORDER OF THE DAY:\n• 09:00 AM — Poruwe Charithra (Traditional Auspicious Ceremony)\n• 10:00 AM – 04:00 PM — Wedding Celebration & Reception\n\nVenue: Grand Ball Room Banquet Hall, Hotel Green Court, Homagama, Sri Lanka",
 };
 
 /**
